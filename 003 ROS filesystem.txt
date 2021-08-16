@@ -1,0 +1,44 @@
+ROS filesystem consists of a catkin workspace directory. In the virtual machine it is ~/catkin_ws.
+
+To create the catkin workspace, you'll have to make a designated directory and a src subdirectory.
+
+Run commands -
+ mkdir -p <catkin workspace dir>/src
+ cd <catkin workspace dir>
+ catkin_make # creates a catkin workspace, adds a CMakeList.txt in ./src, devel and build director in ./
+ 
+The <catkin workspace dir>/src/CMakeList.txt is a high level cmake file telling how to build the source code, I THINK.
+
+then, you can create and maintain your ros packages within the src directory of your catkin workspace directory.
+
+Each ros package has it's own directory. No nested ros packages are allowed. i.e. a ros package directory can't be inside another ros package directory.
+
+Each ros package directory has - 1. package.xml manifest file, carrying all the metadata about the package - maintainer, license, dependencies. 2. CMakeList.txt file.
+
+So the overall template structure of a catkin workspace in context of ros will look like -
+
+"""
+catkin_workspace_dir/
+	/devel/
+		...
+	/build/
+		...
+	/src/
+		CMakeList.txt
+		/ros_package_1/
+			package.xml
+			CMakeList.txt
+			...
+		/ros_package_2/
+			package.xml
+			CMakeList.txt
+			...
+		/ros_package_n/
+			package.xml
+			CMakeList.txt
+			...
+		...
+	...
+"""
+
+

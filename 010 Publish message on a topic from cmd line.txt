@@ -1,0 +1,37 @@
+1. the command for publishing a message on a topic from command line is-
+   "rostopic pub -r 10		#here -r 10 is the rate at which the msgs is published. at 10 hz
+   	/turtle1/cmd_vel	#topic name you want to publish to
+   	geometry_msgs/Twist	#message type of the message you're going to publish
+   	'{linear: {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+   	# contents of the message wraped in a string within single quote, sent with a syntax of python dictionary
+   "
+
+2. Run the following command after startin the roscore and turtlesim_node
+
+"
+rostopoic pub -r 10 /turtle1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+"
+
+3. Since we did not specify for how long to publish the message, the message keeps publishing at 10 hz per second forever and the turtle bot hits the wall.
+
+4. you can use the -1 or --once argument with rostopic pub command to only publish your message once. But the way ROS structure is implemented, you never really publish a message a once. you publish that message with some frequence and keep publishing last updated (most relevant) values to the topic. and when therefore when you'll run the command
+
+"
+rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+"
+you'll see that the latching takes place and the same message keeps getting published for 3 seconds (std time) with some standard frequency)
+
+5. So we are not actually publishing velocity but displacement along with the rate at which the message is published brings out the effect of moving the robot.
+
+6. to test my hypothesis out, run "rostopic pub -1 -r 1 /turtle1/cmd_vel geometry_msgs/Twist '{linear: {x: -1.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'" and see if the robot shows jerky movement. 	NOPE, THAT AIN'T IT
+
+
+7. I'll investiage further onto how the msgs or published in a topic, specifically how to control the frequency and number of time a message is published and how it is interpreted by the subscriber.
+
+8. in the case of turtlesim I think, the topic cmd_vel is misleading. if all that you're doing is telling the velocity to the subscriber, publishing that message one time will be enough and the bot should keep moving with that same velocity unless a new message is published to the same topic but that is not what we observe.
+
+9. with the -r argument we were able to control the frequence or rate at which the command was published but it kept publishing for undefined time.
+
+10. with the -1 argument we were able to stop the publishing of message after std (3 sec) time and the bot stopped after 3 seconds too.
+
+11. My conclusion is that the once the turtle bot stops receiving msgs, it will automatically stop after a waiting period as a safery feature. and that means it doesn't matter the rate at which I am publishing the msgs, the velocity will still be the same as long as I am publishing the same msg. It is easy to test out. 	VOILA, MY ASSUMPTION WAS RIGHT. the rate doesn't matter much and it is indeed the velocity that the bot is listening for and updating in the simulation. it's just that it stops after it doesn't here a message in the cmd_vel topic after a bit.

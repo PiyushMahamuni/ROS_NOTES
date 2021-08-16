@@ -1,0 +1,16 @@
+1. Have the same computation graph as that of 012...txt of ROS notes.
+
+2. run "rostopic type /turtle1/pose" to see the type of the message the "/turtle1/pose" topic uses.
+
+3. run "rosmsg show <msg type of /turtle1/pose>" to see the structure of that message type
+
+4. open a new window of terminal and run the following echo command to see various msgs being published onto the /turtle1/pose topic.
+   "rostopic echo /turtle1/pose".
+
+5. Open the tab running the teleop node and give inputs. Observe the messages being published on the /turtle1/pose topic as you give inputs.
+
+6. It may look like that new messages are published only after a input is given to the teleop node but if you observe carefully you'll see that the messages are being published much more rapidly (fast enough to be recognized as real time) even though the position of the robot isn't changing.
+
+7. The one thing to note here is that the x and y values of msg are somewhat irrelevant since it's a simulated world and you could consider them to be any linear units. The orientation parameter theta though has values printed in as radians (not degrees)
+
+

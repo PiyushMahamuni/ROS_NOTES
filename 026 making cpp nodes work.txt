@@ -1,0 +1,30 @@
+To make the cpp nodes work with the rosrun command, there are some extra steps that you'll have to perform that you don't have to with python scripts other than making sure that they have execution permission for the user you are using.
+
+To make the cpp nodes available to the rosrun command we need to build their executables and for that we need to make some changes into the CMakeList.txt and package.xml files of your package.
+
+Specifically, we need to add dependencies in these two files.
+
+
+1. Adding Dependencies in the CMakeList.txt
+	Here we'll provide all the information that the c compiler needs to compile our node cpp source files and build the executables and execute them. Here we have to make sure that all the ros packages that we used in our cpp code are defined in the CMakeList.txt for the compiler to find.
+
+You'll see a line written in CMakeList.txt -
+## Find catkin macros and libraries
+find_package(catkin REQUIRED COMPONENTS
+	roscpp
+	rospy
+	std_msgs
+	## any other required package should be added in the list, for example if you need Twist message you should add
+	geometry_msgs
+)
+
+After making sure that all the required dependencies for building the cpp nodes are there, you need to add following lines at the end of the CMakeList.txt file
+
+#for your newly written cpp node
+add_executable(<node name to use with rosrun> <cpp file path for that node>)
+target_link_libraries(<node name> ${catkin_LIBRARIES})
+
+Now after you've made changes to the CMakeLists.txt you'll have to add dependencies in package.xml file
+Here, you'll find the build depends, exec depends build_export depends that you have mentioned at the time of creation of ros package using catkin_create_pkg command. If you have used any additional packages in your cpp code, e.g. std_geometry, you'll have to add those too in these dependecy list.
+
+After you've done all the necessary changes to all the CMakeList.txt and package.xml files, you're required to go to the workspace directory and compile your whole workspace with catkin_make command. Remember, this command was not necessary to run in case you've devloped your nodes in python. with python, you don't have to create executable files from your .py scripts but with cpp it is necssary to build executables and then link them to right object files.

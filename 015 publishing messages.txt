@@ -1,0 +1,12 @@
+1. Have the same ROS computation environment running as 13th ROS note.txt file
+
+2. We have already seen how to publish messages before, what we are going to do is change the contents of the message and see differne outputs.
+
+3. We'll be publishing to the same topic "/turtle1/cmd_vel" with "geometry_msgs/Twist" message type.
+
+4. We have already moved the robot forward and backward with the command by settin the 'x' of 'linear' Vector3 field. Try that again if you want to. After that try inputing other than 0 values for linear.y, linear.z, angular.y, angular.x. and observe
+
+5. The robot didn't move did it? why? Observer more carefully, can a car move sideways? no! why the steering and wheel arrangement only allows the car to rotate around z axis and move in x direction. If it had mechano wheels, swedish wheels? those wheels allow motion in y direction as well. If a vehicle is a terrestrial vehicle it will always follow terrain and it's linear.z paratmeter will change accordingly and you can't change it by giving commands. For the similar reasons, that the simulated robot is simulating a real world scenario, changing angular.x and angular.y doesn't do anything for turtlebot.
+
+6. Try giving the robot a linear velocity in x direction and angular velocity around z axis. What will happen? the robot traces a circular path. It's rotating at conatant velocity while traversing distance at constant velocity. So you can describe a circle (without relative position to origin) just by ration of angular to linear or linear to angular velocity. - (dtheta / dt ) / ( ds / dt ) = dtheta/ds
+* the x direction in this case is actually the displacement in two dimensional cartesian cordinate. or the radial vector in circular cordinate.

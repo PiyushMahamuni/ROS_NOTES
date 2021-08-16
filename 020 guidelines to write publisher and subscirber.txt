@@ -1,0 +1,30 @@
+Practical tips to write PUBLISHER in ROS
+
+Follow these 5 steps -
+
+1. Determine a name for the topic you're going to publish in.
+
+2. Determine the type of the message the topic will publish.
+
+3. Determine the frequency of the topic publication (how many messages per seconds are supposed to be published in the topic)
+
+4. Create a publisher object with the parameters chosen.
+
+5. Keep publishing the topic messages at the selected frequency.
+
+
+Practical tips to write SUBSCRIBER in ROS
+
+Follow these 5 steps -
+
+1. "Identify" (not determine) the name of the topic to listen to.
+
+2. Identify the type of the message the topic uses.
+
+3. Define a callback function that will be automatically executed when a new message is recieved on the topic.
+
+4. Start listening for the topic messages.
+
+5. Spin to listen forever (in C++)
+
+

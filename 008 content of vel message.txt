@@ -1,0 +1,55 @@
+1. Let's discect and see the contents of the messages published on "/turtle1/cmd_vel" topic
+
+2. the messages are of type geometry_msgs/Twist and it has two main part. linear part and angular part
+
+3. The linear part is structured as -
+
+linear
+   float64 x
+   float64 y
+   float64 z
+   
+angular
+   float64 x
+   float64 y
+   float64 z
+
+
+4. linear values represent linear values in some specified unit
+5. angular values represent anges around that axis. i.e. roll with first float64 x, pitch with second float64 y and yaw with the third float64 z
+
+6. The type of the message [geometry_msgs/Twist] is split into two parts. first one is the ros package name itself. in this case it is
+   "geometry_msgs" and then the name of the ros message type defined within the package which is "Twist" in this case.
+
+7. To see the exact file of that Twist message you can open the file in "/opt/ros/noetic/share/geometry_msgs/msg/Twist.msg". You'll see following lines in that text file -
+
+"
+# This expresses velocity in free space broken into its linear and angular parts.
+Vector3  linear
+Vector3  angular
+"
+
+8. That is the message type contains two vector3 fields. one is name linear and the other one is angular.
+
+9. Now Vector3 is another message located in the same package. You can open that Vector3.msg file as well. the contents of it are -
+
+"
+# This represents a vector in free space. 
+# It is only meant to represent a direction. Therefore, it does not
+# make sense to apply a translation to it (e.g., when applying a 
+# generic rigid transformation to a Vector3, tf2 will only apply the
+# rotation). If you want your data to be translatable too, use the
+# geometry_msgs/Point message instead.
+
+float64 x
+float64 y
+float64 z
+"
+
+10. You'll see some comments meant for programmer to help him choose the right message type and other critical info about the message.
+
+11. Here you can see that there are 3 float64 fields. These are like variables and they have name: x, y, z. These messages are bit like structures from c langauge.
+
+12. Most of packages that came with ROS installations will have their set of standard messages built in but you can also create your own message type and add to various packages.
+
+

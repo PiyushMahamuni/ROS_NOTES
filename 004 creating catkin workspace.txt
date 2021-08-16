@@ -1,0 +1,28 @@
+To write your own ros packages, you can either create them stand alone. means no catkin workspace directory involved in creating and building rospackage, however, it is always recommended that you use a catkin workspace directory and devlop your ros packages within that directory.
+
+To create a catkin workspace is very simple, you decide on name for the workspace path and directory name.
+Let's create ~/catkin_ws directory as the catkin workspace directory.
+To convert this directory into a catkin workspace, you'll need a src sub folder in this directory.
+
+We can combine these two operations and perform them in a single go with "mkdir -p ~/catkin_ws/src"
+
+After creating both the directories, move to the catkin workspace direcotry. "cd ~/catkin_ws" and then run the "catkin_make" command
+
+after the command is run, you'll find a CMakeList.txt file in ~/catkin_ws/src and also two more directories "/devel" and "/build" in "~/catkin_ws"
+all of these three directories in "~/catkin_ws" - "/src", "/devel", "/build" represent source space, build space and devel space, to write, build and maintain your ros package codes.
+
+After you've run the catkin_make, your catkin workspace is ready for creating ros packages but before that, there's one more command that you'll have to run. You need to source "<catkin_workspace>/devel/setup.bash" file. This file is important as it setups various environment variables and without sourcing which you won't be able to use various ros command line tools, create ros packages and run them from within your catkin workspace. Actually, you'll need to source that file for every new terminal session and without that you'll be unable to do all the things mentioned earlier as well. So, it's a good idea to add the source command in the ~/.bashrc file which is executed every time a new terminal session is created for that session.
+
+Do following things -
+
+run
+ gedit ~/.bashrc
+
+add
+ source /opt/noetic/share/setup.bash # main ros directory and it's setup bash file
+ source <catkin workspace>/devel/setup.bash
+ echo $ROS_PACKAGE_PATH # prints this variable on the console, telling the various paths of various catkin workspaces sourced above and that of main ros workspace directory 
+
+save and close the file.
+
+close the terminal session and start new.

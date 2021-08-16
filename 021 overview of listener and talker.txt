@@ -1,0 +1,14 @@
+The listener and talker are the "hello world" example of the ROS.
+
+
+Let's jump to an example -
+
+There are two nodes. /Talker - publisher node, publishing to the /chatter topic
+/Listener node, subsribed to the /chatter topic.
+/chatter topic has the std_msgs/String as it's message type.
+
+it's contents will be -
+"""
+data = "Hello World %d"
+"""
+

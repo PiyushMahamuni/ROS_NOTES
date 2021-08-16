@@ -1,0 +1,33 @@
+To write subscirber node in python, you open the src folder within your package directory
+
+You create the .py file for the subscriber node "listner.py" for the "talker.py" we created last time. We already know the 5 steps in creating the subscriber node, we just have to implement them in code in this listener.py file
+
+code - 
+
+"""
+#! /usr/bin/env python
+import rospy
+from std_msgs.msg import String
+
+def chatter_callback(message):
+	# callback function to execute automatically every time a new message is received
+	rospy.loginfo(f"{rospy.get_caller_id()} I heard {message.data}")
+
+def listener():
+	rospy.init_node('listener', anonymous=True)
+	# initializing the node with the name 'listener' and maintaining anonymity of the node (avoiding naming conflicts and giving unique name)
+	rospy.Subscirber('chatter', String, chatter_callback)
+	# starting the subscriber object, passing the topic name, type of the topic, and address of the call back function.
+	# you don't need to store the ref to this subscriber object in this case. All we ever do is listen to the topic and if we get any messages,
+	# invoke the callback function (the callback function only has one parameter which will be the message received on the topic)
+	rospy.spin()
+	# this line tells to start listening. and it will start listening indefinitely and you lose your control over the program and the program
+	# will continue to execute according to the message it recieves and logic you've implemented in the callback function
+	# i.e. keeps the python from exiting unless the node is killed manually with ctrl+c
+
+if __name__ == "__main__":
+	try:
+		listener()
+	except rospy.ROSInterruptException:
+		pass
+"""

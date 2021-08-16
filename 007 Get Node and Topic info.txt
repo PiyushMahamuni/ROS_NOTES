@@ -1,0 +1,27 @@
+1. to retrieve info of a ros node run the command - "rosnode info <node name from computation graph>"
+
+2. remember the node names from the computation graph starts with "\".
+   you can always run the command "rosnode list" to find out
+
+3. example - "rosnode info \turtlesim"
+
+4. Once you run the command you'll see various info related to that node including -
+   a. publications - (topics to which the node publishes info) and you'll see the type of msgs it publishes to that topic in square brackets
+   b. subscriptions - again, these are topics and the type of messages it expects to see within that topic are mentioned in the `[]`
+   c. services - these are the services that are provided by the node. (various actions it can take, e.g. spawn a turtle or so...)
+   d. the contacting node - I am guessing that this is the address of the node
+   e. Connections. In this segment you'll find the various connection the node maintains with other nodes through various topics.
+      You'll first see a topic name and within that topic name which nodes it is connected to, in which direction (inbound or outbound i.e. is the node listening or speaking or both) and communication protocol being used to transfer the data between the two nodes. usually it is TCPROS
+
+5. You'll always see the \rosout node listed in the publication. it is the roscore node. all the nodes are in outbound communcation with the node "\rosout" with the topic "\rosout"
+
+6. To retrieve the info of a rostopic you run the command - "rostopic info <topic name from computation graph>"
+
+7. Remember the topic name from the computation graph starts with "/".
+   you can always run the command "rostopic list" to find out which slash is used.
+
+8. Once you run the code you'll see various information about a topic printed on the console. These are -
+   a. types of messages being published to and received from topic.
+   b. list of publishers publishing to the same topic.
+   c. list of subscribers listening to the updates from topic.
+

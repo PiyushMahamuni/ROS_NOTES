@@ -1,0 +1,58 @@
+Writing a publisher node to implement the 'talker' node in python.
+
+open the rospackage in IDE of your liking and create a py file for the talker node.
+
+"""
+#! /usr/bin/env python
+
+# this above line is very important to be able to use this script with rosrun command, it tells how to interpret this file
+# as a python script
+
+import rospy
+from std_msgs.msg import String
+
+def talker():
+
+	pub = rospy.Publisher('chatter', String, queue_size=10)
+	# creating a publisher object, first parameter is topic name, second is the message type
+	# included on the line 2 from the code using from statement
+	# the queue_size is nothing but the buffer size for the messages. Since subscribers may not be able to poll
+	# i.e. retrieve messages from the topic at the same pace as that of publishers, you may need to keep them in buffer
+	# and publish them at an appropriate time to the topic. Once the message is published to the topic, it is deleted
+	# from this buffer.
+	# ideally, every message after being published should be consumed by the subscriber nodes very shortly. But it might not
+	# be possible to acheive that in every application hence the need of a queue
+	
+	rospy.init_node('talker', anonymous=True)
+	# The second thing you'll need to do while writing a publisher node in python is that after creating the publisher
+	# object you'll have to initialize a node in the ROS environment with a name. Since every node should be standalone in its code
+	# you don't create a node object, the file itself is the node object and you just create a publisher object within the file.
+	# to initialize the node in ROS environment, you'll need above python line.
+	# rospy.init_node('<name of the node in ROS environment>', anonymous=True/False)
+	# the anonymous keyword arg tells the rospy.init_node function to create unique ros node with unique name each time this code
+	# is called to initialize a talker node if it is True. i.e. if you were to invoke this node using rosrun command several times, each time
+	# every newly created talker node will get a unique id appended to it at the end for its rosnode name so that there aren't any naming
+	# conflicts.
+	
+	# after this point, you're now required to implement your logic for the node.
+	
+	rate = rospy.Rate(1) # Create a rospy.Rate object which can make the process sleep for reciprocal of numerical value it recieved,
+	# here it is 1, hence 1/1, i.e. for one second
+	i = 0
+	
+	while not rospy.is_shutdown(): # while this node is alive
+		hello_str = f"Hello world {i}"; # create a regular string
+		rospy.loginfo(hello_str) # log the string
+		pub.publish(hello_str) # publish the string onto the topic
+		rate.sleep() # slepp for 1 second
+		i += 1  #increment the counter.
+
+
+if __name__ == "__main__":
+	try:
+		talker();
+	except rospy.ROSInterruptException:
+		pass
+"""
+
+

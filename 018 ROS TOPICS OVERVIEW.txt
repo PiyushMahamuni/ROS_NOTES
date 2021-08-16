@@ -1,0 +1,27 @@
+1. Topics are areas of interest for which various nodes are going to publish information and various nodes have subscribed to listen to.
+
+2. Each topic has a msg type associated with it and all the information that will be published in the topic has to conform to this type. The type is nothing but the structure of the message, in which way it is structured.
+
+3. In ros, with publisher subscriber mode, where the ros topics are used, you can have a one to one communication between two nodes through a topic. Or you can have one to many communication, i.e. multiple nodes are listening to the updates of the same topic and one publisher is publishing in that topic.
+
+4. Let's walk ourselves through how the connection between two nodes is established in ROS.
+
+a. You have to start the master node, with "roscore" command.
+
+b. You need to start running a node (let's say a subscriber node) using either "rosrun <package_name> <node 'run' name>" or "roslaunch <package_name> <node 'launch' name>"
+
+c. Once you run one of those commands, the node announces itself to the master node, telling it's name, various topics it is subscribed to and the type of those topics, various topics it is subscribed to and type of those, and it's address.
+
+d. Master node stores all of this information within itself and when it sees a new publisher node announcing itself to it, it sends information back to the any subscriber node of that topic and tells it that this 'new node' (it's name and address) is willing to publish information on this 'xyz' topic you are subscribed to.
+
+e. After receiving this info from the ros master, the subscriber node will send a connection request (either TCPROS or UDPROS connection) to the publisher node using the info it recieved from the ros master node.
+
+f. the publisher node then after hearing the request from subscriber node, will send back the response for accepting the connection with the subscriber.
+
+g. The subscriber node at the end will send the acknowledgement that the connection has indeed been established between the publisher and subscriber node.
+
+h. These is the three way hunching of the TCP protocol. -1. subscriber sending the TCP request for a connection. -2. Publisher sending a response back for the request accepting/rejecting the connection. -3. Subscriber sending the acknowledgement back to the publisher indicating that the connection has indeed been established.
+
+i. After all these steps, finally the publisher node will be able to send information to the subscriber node through the topics.
+
+j. That is there are lot of message exchange between two ros nodes before they are able to send actual application data to each other.

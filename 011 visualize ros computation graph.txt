@@ -1,0 +1,13 @@
+1. to visualize the ros computation graph, there is a handy command
+
+" rosrun rqt_graph rqt_graph "
+
+2. you can deduce from the command itself that the rqt_graph is a ros package and withing that package ther is a ros node named rqt_graph and hence this process of visualizing ros graph becomes a node in the ros environment as well.
+
+3. You can test this hypothesis by running roscore along with several other rosnodes and then running this command form line 3. After the graph is visualized, run the "rosnode list" command in new terminal and you'll see a node related to this rqt_graph in the list now. I've done it and seen the newly added node for the rqt_graph process.
+
+4. You should also check the topic list with command "rostopic list" after runnig rqt_graph node. You'll see the "/statistics" topic being active
+
+5. You should check the info of "/statistics" with "rostopic info /statistics" command
+
+6. I don't know how the rqt node is working, it is publishing to /rosout... anyway it's a special node that isn't actually participating in the ros computation graph but just figuring it out and visualizing it for us so I am not bothered much about it.

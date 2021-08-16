@@ -1,0 +1,31 @@
+If you're writing a cpp ros node, here are things that you are most likely going to use -
+
+1. Good practice to declare various constants rathr than using literals - node_name, blinking/short sleep time, publishers, subscribers...
+
+2. You always have this main function signature - int main(int argc, char** argv)
+
+3. You always have this function call in main before doing any ros related calls - ros::init(argc, argv, node_name);
+
+4. You need to create a ros::NodeHandle object to handle your cpp node, to create publishers, subscribers, timers and what not...
+   This is the second must step after ros::init() call with ros nodes.
+
+5. You can't create any ros::Duration and ros::Timer objects before creating a ros::NodeHandle, it will cause a runtime exception!
+
+6. to create publisher object you use ros::Publisher topic_pub {node.advertise<`msg type`>("topic_name", queue_size)}, or assignment of a global
+   publisher identifier. The second is preferred since you have access to it in every scope.
+   
+7. to create subsriber object you use ros::Subscriber topic_sub {node.subscribe("topic_name", queue_size, callback_function_address)} or
+   assignment of global subscriber identifier. Note here, we did not specify the msg type used by the topic while creating a subscriber object
+   through node.subscribe() method. The msg type is deduced by the parameter type of the callback function passed as an argument here.
+
+6. ***IMP - in subscriber callback functions, always use `const` with <msg type>::ConstPtr& msg, otherwise it gives some deserializtion error
+   in compile time and is not obvious to trace down the error.
+
+7. ***IMP - You can use a function pointer instead of function name (both are essentially the same in cpp except for constness) in node.subscribe()
+   but changing the value of that pointer later on doesn't change the callback function automatically. i.e. the callback_function_address parameter
+   is passed by "value" and not by ref so that passing pointer to ros::NodeHandle::subscribe and changing it later doesn't change the callback
+   function.
+   To have this behaviour, use function call using function pointer inside of the callback function.
+
+8. You need to stop any running timers before the end of main function otherwise it will cause a runtime exception at the termination of your node
+   with ros::Timer::stop() function call on your timer objects.

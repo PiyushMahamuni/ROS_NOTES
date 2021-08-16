@@ -1,0 +1,28 @@
+1. First you need to start the roscore node or "\rosout" node with the "roscore" command
+
+2. Every other node you'll introduce with the "rosrun <package_name> <node_name>" will invoke the node and once the node will announce itself to the roscore node before it starts executing
+
+3. By announcing itself what we mean is telling the roscore node what topics it publishes to, what topics it is subscirbed to and what type of msgs it sends or receives from those topics and lastly it's name and address
+
+4. Once the roscore node sees a new node which is subscribed to a topic for which there alreays is a publisher or the other way around, it tells the subscriber node to listen to updates from the address of the publisher node. aka introduces the publisher to the subscriber and from that point onwards all the data that is travelling through the topic is sent directly from publisher to the subscriber node and master node is unawre of those updates.
+
+5. Once you have all the nodes introduced in the ros environment and running, you can stop the roscore node and everything will still continue to work fine. Though, you won't be able to execute any ros command and all that you could do at this point to control this ros computation graph is to kill individual nodes to stop the ros environment.
+
+6. even though you rerun the roscore command after killing it, the newly running roscore node won't be communicating with the already running ros nodes and every new node you'll add actually gets added to the newly running parallel ros computation graph to that of the older one.
+
+7. In ROS there are 3 ways modes of communication between two ros nodes
+   a. publisher, subscriber mode
+   b. server and client mode
+   c. action server and action client mode
+
+8. Publisher subscriber mode is the most simple one. It's a unidirection communication mode where data travels from publisher to subscriber through channesl called "topics". In these topics the publisher publishes a message of certain type and the subscriber is expecting to hear message of certain types.
+
+9. A node can be a publisher for several topics and subscriber for others. It doens't have to perform only one role for only one topic.
+
+10. The second mode is server and client mode. In this mode the client makes a request - for a information or a service ( providing information is a service itself ). The server executes on the request made by the client either declining it or accepting it, performing the service and returing the result to the client. (returns response to client request)
+
+11. Key points about this mode is that server doesn't do anything on its own unless it is requested to do so by any of it clients/
+
+12. Once a client makes a request, it waits until it hears the response of server. That is this mode of communication is completely synchronous. The client can't perform any other activity until it receives the server response and can only continue it's own activities after getting the response.
+
+13. Actioning. This mode of communication is very similar to that of server and client mode except that it is completely asynchronous. That is the client can make a request (action goal) and then the server will start to act on that request and client is free to do whatever it needs to do in the meantime. The server may keep sending back action feedback, that is how well the requested action is being done, at what stage the server is in completing the action goal sent by client (i.e. various process logs) to the client. and at the end when server finishes it's work and reaches the action goal, it sends back the action result to the client.

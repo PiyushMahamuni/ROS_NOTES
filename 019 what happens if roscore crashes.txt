@@ -1,0 +1,5 @@
+Q. AFTER ESTABLISHING CONNECTION BETWEEN TWO ROS NODES, WHAT HAPPENS IF THE ROS MASTER STOPS WORKING/ CRASHES?
+
+Ans: The ros nodes don't need the roscore node after they have established the communication with each other. If the ros master does crash in such a scenario all the communication between various nodes are maintained without fault. However, if there is any disturbance in the ROS environment or you need to make any changes to it, you won't be able to resolve or do them.
+
+For some reason if the communication between two ros nodes isn't working, you can't resatblish the communication without the ros core running. You can't introduce a new node in the ros environment without the roscore running. You can't use most of ros commands like rosrun, rosnode, rostopic since most of them rely on roscore node.

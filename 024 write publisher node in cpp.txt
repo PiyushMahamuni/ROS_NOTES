@@ -1,0 +1,40 @@
+publisher in C++ -
+
+"""
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include <sstream>
+
+int main(int argc, char** argv){
+	ros::init(argc, argv, "talker_node");
+	ros::NodeHandle n;
+	// in cpp client library API, we first create the nodehandle object to handle this node
+	// then we use this nodehandle to craete a publisher object
+	
+	// advertise is the method that returns a publisher object while also advertise the node `n` to the master node.
+	// the template argument is the type of the message the topic uses, the first parameter is the name of the topic and the second
+	// pos arg is the queue size
+	ros::Publisher chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+	ros::Rate loop_rate(1); // same as that of rospy.Rate object
+	
+	int count = 0;
+	while(ros::ok()){ // equivalent to while not rospy.is_shutdown() from python code
+		std_msgs::String msg;  // create a String msg object from roscpp client library
+		std::stringstream ss;
+		ss << "Hello World " << count;
+		msg.data = ss.str();
+		ROS_INFO("[Talker] I published %s\n", msg.data.c_str()); // log the info
+		chatter_publisher.publish(msg); // publish the msg, it is stored in the buffer first and then released to the topic in actual
+		// ROS environment, I think
+		ros::spinOnce(); // send everythin that is in the buffer to the ROS topic
+		loop_rate.sleep();
+		count++;
+	}
+	return 0;
+}
+"""
+
+
+Though, writing this code and them compiling the catkin workspace isn't sufficient. There must be some other steps that need to be done before being able to run this node.
+
+Look at next note for time being and I'll add the necessary steps to make these cpp nodes run after a while.

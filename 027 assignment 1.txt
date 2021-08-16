@@ -1,0 +1,52 @@
+Write a python script node and a cpp node to publish gemotery_msgs/Twist type of message on /turtle1/cmd_vel topic that turtlesim node is subscribed to, to control it's motion and also subscribe to it's position info through the /turtle1/Pose topic and print it on the console through the same node.
+
+Here is the cpp code -
+
+----------------------------------------------------------------------------------------
+#include "ros/ros.h"
+#include "geometry_msgs/Twist.h"
+#include "turtlesim/Pose.h"
+
+void callback_pose(const turtlesim::Pose::ConstPtr& msg){
+	ROS_INFO("[Ass_01] I heard pose \n x = %lf, y = %lf, theta = %lf, linear_vel = %lf, angular_vel = %lf",
+	msg->x, msg->y, msg->theta, msg->linear_velocity, msg->angular_velocity);
+	return;
+}
+
+int main(int argc, char** argv){
+	ros::init(argc, argv, "Ass_01");
+	ros::NodeHandle node;
+	ros::Subscriber sub { node.subscribe("turtle1/pose", 1, callback_pose) };
+	ros::Publisher pub { node.advertise<geometry_msgs::Twist>("turtle1/cmd_vel", 1000) };
+	long int count {};
+	geometry_msgs::Twist msg;
+	msg.linear.x = 0.5;
+	msg.linear.y = 0;
+	msg.linear.z = 0;
+	msg.angular.x = 0;
+	msg.angular.y = 0;
+	msg.angular.z = 0.5;
+	ros::Rate loop_rate(1);
+	while(ros::ok()){
+		pub.publish(msg);
+		ROS_INFO("%ld: [Ass_01] I published:\n {linear = { x = %lf, y = %lf, z = %lf }, angular = { x = %lf, y = %lf, z = %lf}}",
+		count, msg.linear.x, msg.linear.y, msg.linear.z, msg.angular.x, msg.angular.y, msg.angular.z);
+		ros::spinOnce();
+		if(count % 5 == 0){
+			msg.linear.x *= -1;
+			msg.angular.z *= -1;
+		} 
+		count ++;
+		loop_rate.sleep();
+	}
+	
+	return 0;
+}
+
+--------------------------------------------------------------------------------------
+
+for this node to run smoothly, you have to add geometry_msgs and turtlesim package in dependencies in both CMakeList.txt and package.xml files of the package you're working with
+
+#### NOTE ------
+
+To have your cpp nodes witihn your ros package build correctly, all you need to make sure that you have the CMakeList.txt file configured correctly. with that only you'll be able to build and run your ros nodes as usual BUT, why we need to mention correct dependencies in package.xml is because if your package is ever to be dowloaded and used by someone else, to install it they should have proper knowledge of its dependencies and it's your job to provide that info otherwise, they might get a broken install of your package and it may even corrupt their system.

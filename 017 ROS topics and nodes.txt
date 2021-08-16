@@ -1,0 +1,4 @@
+1. ROS topics are topics of interest, within which you're going to publish or listen to various msgs.
+
+2. The ros nodes are the individual processes that publish or listen to these updates from within the topics.
+

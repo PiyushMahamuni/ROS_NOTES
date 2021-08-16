@@ -1,0 +1,9 @@
+1. now run rosrun "turtlesim turtle_teleop_key". This will add the turtle_teleop_key node into the ROS environment
+
+2. Now check the nodes in the environment with "rosnodes list" and you'll see the "/teleop_turtle" node in the list added newly
+
+3. check the topics in the environment with "rostopic list" and you'll see that no new topics are introduced. this is becuase the "/teleop_turtle" isn't introducing any new topics that it listens or publishes to. it only publishes to the "\turtle1\cmd_vel" topic which was already introduced into the environment when the "/turtlesim" node announced itself to the roscore node.
+
+4. Whenever a subscriber node or a client node is introduced into the environment, the ros master tells it to recieve msgs/updates/responses from the respective publisher node or server node which is handling a the same topic
+
+

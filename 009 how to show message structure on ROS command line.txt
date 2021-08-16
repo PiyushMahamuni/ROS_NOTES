@@ -1,0 +1,20 @@
+1. To see the contents of the message in the terminal, you just run the following command -
+   "rosmsg show <package_name/message_name"
+   e.g. "rosmsg show geometry_msgs/Twist"
+
+2. When you'll run the "rosmsg show geometry_msgs/Twist" you'll see following lines on terminal -
+
+"
+geometry_msgs/Vector3 linear
+  float64 x
+  float64 y
+  float64 z
+geometry_msgs/Vector3 angular
+  float64 x
+  float64 y
+  float64 z
+"
+
+3. Note, the first (8th) and the fifth (12th) line from output are telling name of field along with it's type. i.e. geometry_msgs/Vector3 linear line is telling that the "linear" is the field of type geometry_msgs/Vector 3 and the contents of that field are mentioned in subsequent lines with an indent preceding them. (like a block from python code). again mentioning filed type and it's name. float64 - field, x - name of field
+
+4. run "rosmsg show geometry_msgs/Pose"

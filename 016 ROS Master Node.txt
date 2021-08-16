@@ -1,0 +1,8 @@
+1. To start the ROS environment, you need to start the ROS master node with command "roscore".
+
+2. Before being able to run the "roscore" node you need to source the setup.bash file from your catkin workspace or your ROS installation directory.
+
+3. If you run the "rosnode list" command in a new terminal tab or window, you'll see only one node running "/rosout" which is basically the ros master node.
+
+4. To be able to run any ros command in your ros computation graph, you need to have this /rosout node running all the time. If it ever crashes, all the current running nodes won't be affected and continue to communicate and run on their own but you won't be able to control them anymore and won't be able to add new ros nodes in the environment either.
+

@@ -1,0 +1,62 @@
+ROS let's you create your own custom messages for communication through topics you have defined yourself.
+
+ROS Message Structure -
+Recall that every message name is a composite of two parts - package_name/msgs_type
+example - geometry_msgs/Twist,std_msgs/String, turtlesim/Pose
+
+Every message types has different fields defined inside of it. example -
+run rosmsg show std_msgs/String or rosmsg show geometry_msgs/Twist. You can navigate ro respective ros packages and see those .msg files for yourself
+
+STEPS OF CREATING YOUR OWN MSG TYPE -	
+
+STEP 1: Create a `msg` folder in your package directory
+
+STEP 2: create a .msg file with name you'd use while prorgramming to refer to this msg type
+
+STEP 3: Edit the .msg file file by adding the elements (ONE PER LINE), you can use `#` for commenting.
+	You'll have to declare types of individula fields. These types are message types themselves which either you've defined yourself
+	or are predefined in ROS libraries.
+
+STEP 4: To be able to use your newly created .msg types, you have to update dependencies for it in CMakeList.txt file of your package.
+	edit the part with the comment -
+	## Find catkin macros and libraries
+	find_package(catkin REQUIRED COMPONENTS
+	# list of dependecies
+	)
+	and add the `message_generation` package in the list of dependencies there
+	
+	now edit another part of the CMakeList.txt file, find the part with the comment -
+	## Generate messages in the 'msg' folder
+	add_message_files(
+		FILES
+		# your .msg files with the extension
+	)
+	if this part doesn't exist, add it before all of the add_executable() commands in CMakeList.txt
+	
+	now edit another part of the CMakeList.txt file, find the part with the comment -
+	###################################
+	## catkin specific configuration ##
+	###################################
+	catkin_package(
+		INCLUDE_DIRS include
+		LIBRARIES <package name>
+		CATKIN_DEPENDS roscpp rospy std_msgs <list of other dependecies> msg_runtime #ADD THIS msg_runtime here
+		DEPENDS system_lib
+	)
+	
+	Now make sure that the part with comment -
+	## Generate added message and services with any dependencies listed here
+	generate_messages(
+		DEPENDENCIES
+		std_msgs
+		actionlib_msgs
+	)
+	is uncommented.
+	
+	Now you're done with all the required configurations in CMakeList.txt
+STEP 5: Update the dependencies in package.xml file
+	add build dependency of message_generation package and exec dependency of message_runtime
+
+STEP 6: compile your catkin workspace with catkin_make to be able to use the newly created msg type.
+
+*** NOTE - visit wiki.ros.org/msg to see all the primitive types of msgs in ROS and info on ros msgs in general

@@ -1,0 +1,9 @@
+*** What is the benefit of using ROS?
+-------------------------------------------------------
+
+1. At any time it gives you (as the user) the ability to send commands by publishing messages to control your robot manually and override the automatic operation.
+
+2. It gives you (as the developer or user) the ability to read the state of the robot at any time.
+
+3. So these are the advantages of using ROS compared to other ways of devloping robots. Once you start running your code, unless you have specifically made arrangements to send commands to robot or see various data logs in real time, you can't do those things. But with ros you don't have to worry about that since you can create the "rostopic echo" node to log the various data in real time through various topics and use "rostopic pub" command to publish a msg to send any command you wish to the robot in real even though you did not make any specific arrangements for that in the code itself.
+

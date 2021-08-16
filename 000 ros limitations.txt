@@ -1,0 +1,31 @@
+ROS is not designed to work with fleet/swamp of robots. i.e. to operate multiple robots at the same time.
+You can implement some packages that allow you to do that or there are some third party contributions that will enable you to do so but they don't come with as much garuntee and testing as a native ROS package would.
+
+
+ROS is not realtime! Based on UDP and TCP communication protocols, and from processes perspectives, all the processes will have the same priority.!
+Currently in ROS there's no way of saying that these certain process is more important/ has higher priority than others.
+
+ROS requires a very reliable network. Since there will be number of nodes running in your ROS environment, each using TCP or UDP protocols i.e. network to communicate with each other, they all consume some network bandwidth. And higher the number of nodes, lesser will be the communication speeds and data slips.
+
+Single point of failure - Since all ROS environments need the ROS master node to be up and running all the time, if it ever crashes, the whole system crashes with it.
+
+
+To overcome these several limitations of ROS, ROS2 is now introduced.
+
+The idea of ROS2 is to first, get rid of the ros master core.
+Instead of using TCP/UDP for intra-Process communication, using DDS(Data Distribution Service) or Abstract DDS a more standard way of communication within processes. So the processes will be standalone and they don't have to be registered with central node. (using DDS with intra-process API)
+
+Other advantage is that ROS2 can run on windows and macos platforms as well while ROS was limited to linux.
+
+ROS2 can be used to control swarm of robots.
+It also implements Quality of Service (QoS) and Real time garuntees.
+Fast prototyping to production phase.
+
+
+Some points about DDS
+DDS is an already industry standard communication system.
+Data-Centric Publish Subscribe (DCPS) system.
+Realtime machine-to-machine (middleware) communication.
+Uses publish subscribe pattern
+Used in: financial trading, air-traffic control, smart grid management, big data and IoT applications.
+

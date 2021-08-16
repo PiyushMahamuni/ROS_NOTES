@@ -1,0 +1,41 @@
+1. start a new ros computation graph by running rosrun command
+
+2. start the turtlesim_node node with "rosrun turtlesim turtlesim_node" command
+
+3. start the third node with "rosrun turtlesim turtle_teleop_key" command
+
+4. run and observe "rosnode list". You'll have 3 nodes in total together with the /rosout /teleop_turtle and /turtlesim
+
+5. run and observe "rostopic list". You'll see various topics present in the current ros computation graph(environment)
+
+6. We have already seen how to publish a message to a topic using "rostopic pub" command, let's see how to view all the various messages being published in a topic. To see all the various messages being published in a certain topic in the terminal, you run following command - "rostopic echo <topic_name>"
+
+7. So, open a new window (not tab since you need to parallely give inputs to /teleop_turtle node and see results in another terminal) of terminal and now run "rostopic echo /turtle1/cmd_vel" to see all the various messages being published in this topic.
+
+8. Once you run the command, you'll see that nothing is being printed on the console after the "rostopic echo" command and that's because there's not a node that automatically publishes msgs onto the "/turtle1/cmd_vel" topic. To publish a topic you have to activate the terminal running the "/teleop_turtle" node and press arrow keys. Make sure that you have the terminal running the "rostopic echo" command visible.
+
+9. Now you'll see that every new message that get's published in the topic is also printed on the terminal. The "rostopic echo" actually starts a node of it's own and if you run the command "rostopic list" you'll see a rostopic node followed with bunch of id numbers in the output. That means you need the roscore running to run the command "rostopic echo" but once the node is started, you can kill the roscore node and everything will continue to work fine. YOu can send msgs from teleop_turtle node to turtlesim node through /trutle1/cmd_vel topic, and the messages will keep printing on the console.
+
+10. Run the "rostopic info <rostopic_node started by rostopic echo>" and see it's subscriptions and publications and connections.
+
+11. You'll notice that the node is just like any other node having standard connection to /rosout node and is subscribed to the topic you passed as an argument in "rostopic echo" command. that is the "rostopic echo" command is creating a tailor made node then and there which listens to the topic you passed as argument and has a unique identification number in it's node name like "rostopic_<number>_<number>" since you can create as many "rostopic echo" nodes as you want, it's necessary to have a mechanism that will give each one a different name yet they are still recognizable as a "rostopic echo" node. That means you'll find this node as a subscriber to the publishers of topic you passed as argument.
+
+12. Now this command was to see the messages being published in a particular topic. To see the info about the topic itself, you can run the command "rostopic info <topic name>"
+
+13. run "rostopic info /turtle1/cmd_vel" and observe
+
+14. You'll see type of messages that are meant to be published inside the topic and various subscribers and publishers of that topic.
+
+15. to see all the available rostopic commands, type the "rostopic" in the terminal and hit the tab twice.
+    These are -
+    bw : bandwidth
+    echo: prints contents of the messages being published in a topic
+    find: finds the topics that are uses certain type of message: ussage - "rostopic find <msgs type>"
+    	run "rostopic find geometry_msgs/Twist" and you'll see "turtle1/cmd_vel" topic printed since it uses this message type
+    hz: I don't know yet what it does and --help argument isn't that useful
+    info, list, pub - we have seen these three
+    type: returns the type of msg the topic uses. usage: "rostopic type <topic or field>"
+    	run "rostopic type /turtle1/cmd_vel" and you'll see "geometry_msgs/Twist" printed since it is the type the topic uses.
+    	* the find and type commands are kind of inverse of each other.
+
+16. Remember to see the structure of a message type you can run "rosmsg show <msg_name>". try running "rosmsg show geometry_msgs/Twist".
