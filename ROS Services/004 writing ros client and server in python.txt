@@ -1,0 +1,85 @@
+### Create the server -
+<code>
+
+#!usr/bin/env python
+from roslearning.srv import AddTwoInts, AddTwoIntsRequest, AddTwoIntsResponse
+import rospy
+
+# CONSTANTS
+NODE_NAME = "add_two_ints_server"
+SERVICE_NAME = "add_two_ints"
+
+def handle_add_two_ints(req):	# the parameter req contains the incoming request message
+	print(f"Returning {req.a} + {req.b} = {req.a + req.b}")
+	return AddTwoIntsResponse(req.a + req.b)				# create a Response msg with AddTwoIntsResponse() passing it the argument list
+	# the message type expects. (The reponse part of .srv file)
+
+
+def add_two_ints_server():
+	rospy.init_node(NODE_NAME);
+	
+	# create a service, arg list: service name, service type(msg type that we exchange), service handler function address
+	S = rospy.Service(SERVICE_NAME, AddTwoInts, handle_add_two_ints)
+	# the handler function will be invoked automatically every time there is new request.
+	print("Ready to add two ints!")
+	rospy.spin()
+
+
+if __name__ == "__main__":
+	add_two_ints_server()
+
+</code>
+
+
+### Create the client -
+<code>
+
+#!usr/bin/env python
+import sys
+import rospy
+from roslearning.srv import AddTwoInts, AddTwoIntsRequest, AddTwoIntsResponse
+
+# Constants
+SERVICE_NAME = "add_two_ints"
+
+def add_two_ints_client(x, y):
+	rospy.wait_for_service(SERVICE_NAME)	# Waits for a node to offer the given service
+	try:
+		add_two_ints = rospy.ServiceProxy(SERVICE_NAME, AddTwoInts)
+		# create a service proxy or a service client, argument list: service name, service type
+		resp1 = add_two_ints(x, y)			# make a request call using the service proxy, passing it the argument list
+		# server will expect
+		return resp1.sum					# proxy returns msg containing both the passed arguments from client and response part
+		# from the server. we return the response part back to the caller of this function
+		
+	except rospy.ServiceException(e):
+		print(f"Service call failed: {e}")
+
+
+
+if __name__ == "__main__":
+	# to have this code operate in inteded way, you'll need to provide the argument list in its call.
+	# the rosrun command simply runs this node without you having to provide the full path of the program, the program is running on its own
+	# the rosrun command is not essential. The rosrun command transfers all the argument list as is to the program call in the terminal
+	# you have to provide those two arguments right after the python file name	
+	if len(sys.arv) == 3:
+		x = int(sys.argv[1])
+		y = int(sys.argv[2])
+	else:
+		print(f"{sys.argv[0]} [x, y]")	# prints the full path of this program and later string literals, exits right away
+		sys.exit(1)
+	rospy.init_node(NODE_NAME)
+	print(f"Requesting {x} + {y}")
+	s = add_two_ints_client(x,y)
+	print(f"{x} + {y} = {s}")
+</code>
+
+
+
+### TIP
+	The server code look similar to the subscirber node code, in that you define the service name similar to topic name
+	service type (msg type of service) similar to msg type of topic, handle function similar to callback function
+	
+	The client code looks similar to the publisher node- while creating the ServiceProxy object, you use the service name and service type
+	but there's not a third parameter. Of course, in server/client code you don't see the queue size parameter.
+	

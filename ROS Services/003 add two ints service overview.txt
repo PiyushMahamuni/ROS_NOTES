@@ -1,0 +1,61 @@
+Just like how it is possible to create your own custom messages in ros, it is possible to create your own custom services.
+
+Here we are going to create a cient server application using ros services. Where the client is going to send two integer values to the server and
+the server will send back the response, the sum of the two integers.
+
+### Steps to create a Client/Server ROS service App
+	Step 1: Define the service message  (service file)
+	Step 2: Create ROS server node		(AddTwoIntsServer)
+	Step 3: Create ROS client node		(AddTwoIntsClient)
+	Step 4: Execute the service
+	Step 5: Consume the service by client
+
+
+### Step 1: Definig the service message.
+	Step a:
+	We'll need to create the .srv file for this.
+	In your ros package directory, locate srv directory and if it is not there, create one.
+	Now we'll create a .srv file called AddTwoInts.srv
+	Edit this file to have the following contents -
+	<contents>
+	int64 a		# Request part
+	int64 b
+	---			# seperation between request and response part
+	int64 sum	# Response Part
+	</contents>
+	
+	This file is called the service definition, defining the request calls and response calls
+	
+	Step b:
+	Update dependencies in package.xml
+	
+	add build depend of message_generation if not already present
+	add exec_depend of message_runtime if not already present
+	
+	Step c:
+	Update dependencies in CMakeList.txt
+	
+	add message_generation package in package list of find_packages(catkin REQUIRED PACKAGES <package list>) call
+	if not already present
+	
+	comment out/add 
+	## Generate service in 'srv' folder
+	add_service_files(
+		FILES
+		AddTwoInts.srv
+	)
+	
+	Step d:
+	compile your catkin workspace with catkin_make
+	
+	Step e:
+	verify that service is created successfully.
+	Go to /devel/include/<your package name> directory of your catkin workspace. There you should now find following files -
+	AddTwoInts.h			# files that represents the service itself
+	AddTwoIntsRequest.h		# file that represents the request call
+	AddTwoIntsResponse.h	# file that represents the response call
+	
+	The other way of verifying that service is created successfully is to use rosservice info command with the service you want to verify
+	
+	
+	add_service_file

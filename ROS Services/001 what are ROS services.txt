@@ -1,0 +1,17 @@
+In ROS services we have a ROS client which sends out request to a ROS server which responds to these requests.
+
+### Unlike topics, ROS service is one time communication.
+	A client sends request then a client sends back a response.
+
+### When to use ROS services?
+	Request the robot to do specific action
+	Example - move to point x,y. spawn a new robot in the simulator, trace a circle...
+
+### The communication protocol is synchronous. i.e. The client will keep waiting until a response has been received from the server.
+	You can specify a timeout - for how long the client should keep waiting to receive the response.
+
+### with ROS topics, we had *one directional communciation (* - though the same node could be both the subscriber and publisher of a topic).
+	But with ROS services we have a 2 step bi-directional communication.
+	Step 1 - Client sends out a request to server
+	Step 2 - Server returns a response to client
+	

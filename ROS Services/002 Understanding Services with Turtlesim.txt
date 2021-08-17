@@ -1,0 +1,59 @@
+------	Turtlesim ROS services examples   ------
+
+### run roscore and turtlesim_node.
+
+### To see various available and running services, as we did with the rostopics, run this command - `rosservice list`
+
+### For this example, we'll focus on /spawn service which allows us to spawn a new turtlebot in turtlesim simulator
+
+### Let's look at the info about this /spawn service. Run - `rosservice info /spawn` (rosservice info <service name>)
+	You-ll see an output similar to this -
+	<output>
+	Node: /turtlesim
+	URI: coderp://Ubuntu:32809
+	Type: turtlesim/Spawn
+	Args: x y theta name
+	</output>
+	Node - the node(s) that offer the service
+	
+	URI - A Uniform Resource Identifier is a unique sequence of characters that identifies a logical or physical resource used by web technologies.
+	URIs may be used to identify anything, including real-world objects, such as people and places, concepts, or information resources such as web
+	pages and books.
+	
+	Type - Message type. The messages used in ROS services are bit different than those used in ROS topics. We'll see the difference later.
+	But basically since in services we have a request and a response, we need a message type for both this messages.
+	
+	Args- The various values client needs to provide while making a request which are used with the request sub type of the service message type.
+
+### To see the contents of the msg type used in a service, just as we did with the messages of topics you can use following command.
+	Note that even if they do the similar thing, they are not similar.
+	command - `rossrv info <service `message name`, full name with node to avoid ambuiguity if there is one>`
+	Note that the argument with the command is ros service message name or type, not the name of the service.
+	run - rossrv info turtlesim/Spawn
+	<output>
+	float32 x		# The request component before `---`
+	float32 y
+	float32 theta	# theta is interpreted in radians
+	string name
+	---
+	string name		# The response component of the message after `---`
+	</output>
+	
+	When you make the request, you send the request component of the message to the server, here with the name that you'd like to give
+	to the robot that will be spawned if the request is completed.
+	The server will send back just one field, a string `name` which will be the name of the spawned turtle bot
+
+
+### Calling the ros service manually through terminal -
+	to make the call to a ros service and make a request you use following command -
+	`rosservice call <service name> <argument list service expects>`
+	let's run - `rosservice call /spawn 7 7 0 turtle2`
+	You'll get an output, being the response from the server, if the spawn was successfull you'll get -
+	<output>
+	name: "turtle2"
+	</output>
+
+### After you've spawned the new robot, keep in mind it's name and then run `rostopic list` and `rosservice list` again.
+	You'll see several new topics and lists generated for this new robot, all the services and topics that were activated by other robot
+	are now also activated for this new robot. The /spawn service didn't just spawned a new robot, it also made sure that all the setup for
+	the new robot to be operable in ros environment is done as well.
