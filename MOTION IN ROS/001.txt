@@ -1,0 +1,7 @@
+Motion in ROS-
+
+We'll use turtlesim node and simulated robots for this section. We'll devlop nodes to control the motion of these robots.
+
+For this section we'll be devloping a cleaning bot application - motivation (Udemy Course- ROS for beginners. though this notes and roslearning repository is likely to contain my own implementation of his ideas)
+
+

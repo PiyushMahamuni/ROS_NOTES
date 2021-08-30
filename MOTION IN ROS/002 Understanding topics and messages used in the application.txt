@@ -1,0 +1,25 @@
+
+<turtle bot name>/cmd_vel   - topic that controls the motion of the robot (velocities)
+geometry_msgs/Twist		 	- msg type that the topic uses.
+
+Contents of the msg type - geometry_msgs/Twist
+
+linear
+	float32 x
+	float32 y
+	float32 z
+angular
+	float32 x
+	float32 y
+	float32 z
+
+<turtle bot name>/pose		- topic on which positoin of turtle bot is updated periodically
+turtlesim/Pose				- msg type that the topic uses
+
+Contents of the msg type - turtlesim/Pose
+float32 x
+float32 y
+float32 theta
+float32 linear_velocity
+float32 angular_velocity
+

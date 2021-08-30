@@ -1,0 +1,13 @@
+Steps to create cleaning application -
+
+Step 1: Write a function to move in a straight line forward/backward for a given distance
+
+Step 2: Devlop a function to rotate in place for certain angle, clockwise and counter clockwise
+
+Step 3: Devlop a function for go to goal location / I already have implemented moveto behaviour in turtle_interact repo
+
+Step 4: Devlop a function to move in spiral shape - ( function to continually change ratio of linear.x/angular.z )
+
+Step 5: Integrate all together to devlop the cleaning application.
+
+

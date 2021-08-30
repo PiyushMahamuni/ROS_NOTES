@@ -1,0 +1,21 @@
+There are often occasions when you need to start several ros nodes for your environment.
+e.g. running roscore, turtlesim_node, turtle_teleop node, and your custom nodes
+
+Repeating this same process manually every time can be avoided and be made automatic with using a launch file to launch these nodes
+
+The contents of the launc file ---------------------
+
+<launch>
+	<node name = "turtlesim" pkg= "turtlesim" type = "turtlesim_node"/>
+	<node name = "clean_node" pkg= "ros_essentials_cpp" type = "turtlesim_cleaner.py output = "screen"/>
+</launch>
+
+---------------------------------
+
+node name - the name that will be used to identify the node in the ros ecosystem, it's optional and if not given default name should be used
+type = the executable file for the node
+output - if not specified, you won't see the output of the node on terminal but the node will be running and all of its effect could be observed
+
+Now store this launch file anywhere within your package with .launch extension, it's recommended that you dedicate a launch/ directory for all the launch files in your package.
+
+To now run the launch file ( you don't need to run the roscore ), use `roslaunch <package_name> <launch_file_name>`

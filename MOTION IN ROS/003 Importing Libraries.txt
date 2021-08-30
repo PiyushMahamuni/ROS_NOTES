@@ -1,0 +1,21 @@
+In order to use the message types in your c++/python code you'll have to import thier libraries, similar to the services.
+
+to include libraries in cpp file, you use -
+
+#include "<package name>/<msg name>.h"
+
+to work with turtlebots, we'll need to include-
+
+#include "turtlesim/Pose.h"
+#include "geometry_msgs/Twist.h"
+
+
+to import libraries in python, you use -
+from <package name>.msgs import <msg type>
+
+to work with turltebots, we'll need to import -
+
+from turtlesim.msgs import Pose
+from geomtery_mgss.msgs import Twist
+
+
