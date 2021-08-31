@@ -1,0 +1,57 @@
+If you want to control your robot / ROS environment remotely, you're likely to use a user machine which is in communication
+with Robot machine over the net.
+
+Let's call them just that, user machine and robot machine.
+So you need your user machine/workstation to control your robot machine, for that we need to do some few number of steps
+
+
+TO configure the robot machine, you setup some environment variables in ~/.bashrc
+so that you don't have to repeat the process for every new terminal sesssion
+export ROS_MASTER_URI=http://localhost:11311
+# 11311 is the default port number
+Next we have to setup the ip address of ROS_HOST_NAME environment variable, to find out the ip address of the robot
+machine, run `ifconfig` command in a terminal, copy the inet or ip address for given enterface like ethernet (eth1) or something else
+let's say that id was XXX.XXX.X.XXX
+set the ROS_HOSTNAME and ROS_IP environment variables to these ip address
+export ROS_HOSTNAME=XXX.XXX.X.XXX
+export ROS_IP=XXX.XXX.X.XXX
+
+* For convinience, you can add echo statements as well telling how these environment variables are setup
+echo "ROS_HOSTNAME: "$ROS_HOST_NAME
+echo "ROS_IP: "$ROS_IP
+echo "ROS_MASTER_URI: "$ROS_MASTER_URI
+
+With these steps, you have completed the configuration of the robot machine.
+
+
+IN your user workstation/machine, open the ~/.bashrc in a text editor
+run the ifconfig to figure out the ip address of your workstation/user machine, you'll find different network adapters having diff IP address
+copy ip address of the one that you have decided to use for ROS communications over the net
+
+Now in the text file, we setup similar set of environment variables,
+export ROS_IP=#The one you just copied to the clipboard
+exprot ROS_HOSTNAME=#Same ip as ROS_IP
+
+Now you need to make sure to specify the correct ROS_MATER_URI, Remember the ROSCORE is setup to be run on robot machine,
+Now the robot machine has the ip address of XXX.XXX.X.XXX that we setup in robot machine's ~/.bashrc, so you set the
+ROS_MASTER_URI as
+export ROS_MASTER_URI=http://XXX.XXX.X.XXX:11311
+# 11311 is the defualt port number but make sure that you enter the correct one as you've setup in your robot machine's ~/.bashrc file
+
+# in hindsight, ROS_IP AND ROS_HOSTNAME is the ip address of the workstation and ROS_MASTER_URI is the resource identfier for the ros core process
+on robot machine
+
+Just as with robot machine, it is a good idea to echo these environment variables in the ~/.bashrc file itself
+
+With these steps, you have completed the configuratin of the user machine.
+
+
+Now to test or setup your ros environment over these two machines, you need to run the roscore on your robot machine first
+For an example also open a new terminal and launch the turtlesim_node on the robot machine
+
+Now if you run the rostopic list command on your user machine, you should see all the respective topics related to roscore node and turtlesim_node
+node
+
+If you now close the roscore and turtlesim_node from your robot machine, and run the same command `rostopic list` on your user machine,
+you should see an error, unable to contact ros master
+

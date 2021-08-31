@@ -1,0 +1,33 @@
+To include another launch file in your launch file, you use include self containing tag within the launch tag
+
+example -
+
+<launch>
+
+	<include file="$(find `package_name`)/`relative launch file address to that of package dir`" />
+	<node pkg="roslearning" type="turnN" name="Naive_Trun_CPP" />
+
+</launch>
+
+The command $(find `package name`) returns the absolute address of your ros package, and hence it doesn't matter where you place your
+ros packages, or where this .lauch file is located. what is important is the relative address of the launch file w.r.t package root directory.
+
+
+To define the parameters of the node. These parameters will be stored in the parameter server of ROS, that your individual ROS nodes can communicate
+with using client libraries to retrieve their values. Launch files can also be used to define/declare, change these parameters from within the
+parameter server.
+
+to define the parameter within the .launch file you use the following self colsing tag and its structure---
+
+<param name="parameter_name" value="The value you want to set to this parameter"/>
+
+* Note - Since in your node's code you'll be implementing rospy.get_param("parameter_name") or its cpp equivalent, you need to make sure
+that the parameter is declared and defined within the parameter server before you run the command to execute the nodes.
+
+that is 
+
+<param .../>
+should be before
+<node .../>
+that needs the particular parameter seted up
+

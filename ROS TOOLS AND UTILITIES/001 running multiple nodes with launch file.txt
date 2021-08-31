@@ -3,6 +3,18 @@ e.g. running roscore, turtlesim_node, turtle_teleop node, and your custom nodes
 
 Repeating this same process manually every time can be avoided and be made automatic with using a launch file to launch these nodes
 
+_______ UNDERSTANDING LAUNCH FILES _______
+
+What are Launch files -
+	An XML document which specifies:
+		which nodes to execute
+		their parameters
+		what other launch files to include
+	they have .launch extension
+		
+	roslaunch is a program that uses these .launch files and easily launches multiple ROS nodes
+__________________________________________
+
 The contents of the launc file ---------------------
 
 <launch>
@@ -12,8 +24,10 @@ The contents of the launc file ---------------------
 
 ---------------------------------
 
-node name - the name that will be used to identify the node in the ros ecosystem, it's optional and if not given default name should be used
-type = the executable file for the node
+node - it is the self containing tag used to specify nodes to launch, it has name, pkg, type attributes
+name = the name that will be used to identify the node in the ros ecosystem, it's optional and if not given default name should be used
+type = the name of the executable file for the node
+pkg = the package where the node is located
 output - if not specified, you won't see the output of the node on terminal but the node will be running and all of its effect could be observed
 
 Now store this launch file anywhere within your package with .launch extension, it's recommended that you dedicate a launch/ directory for all the launch files in your package.
