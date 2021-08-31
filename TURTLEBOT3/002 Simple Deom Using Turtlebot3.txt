@@ -1,0 +1,20 @@
+1. Let's launch the turtlebot3 simulation in the maze enviroment with 
+roslaunch turtlebot3_gazebo turtlebot3_world.launch
+
+2. In the same way we will start the rviz
+roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
+
+3. We will also now open the teleop node to be able to make the robot move and then as the robot moves around you will be able to see
+the world is being built off of the laser data in the RVIZ
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+
+You can run the rosnode list to see the various nodes present at this point and also the rostopic list
+
+Here are some of the topic that might interest you right off the bat -
+/imu
+/scan - has the laser scanner data
+/odom
+
+These 3 channels are from robots relative point of view what could be equivalent to /pose channel from turtlesim_node
+

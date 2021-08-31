@@ -1,0 +1,26 @@
+You can launch the turtlebot3 in various environments.
+
+To launch the turtlebot3 in empty world environment you use -
+roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+
+There is also a teleop node similar to that of the turtle_teleop_node in turltesim package
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+Another environemt for turtlebot3 is the World Environment, you'll see how its setup once you launch -
+roslaunch turtlebot3_gazebo turtlebot3_world.launch
+This env is similar to a kind of maze environment
+
+Another useful environment is the Turtlebot3 House environment-
+roslaunch turltebot3_gazebo turtlebot3_house.launch
+
+Now a very important tool to be familiar with is Turtlebot3 RVIZ, which is used to make different kinds of visualization.
+It stands for ROS Visiualization Tool. To start this tool you run -
+roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
+# One of the utilities of using RVIZ is being able to visualize data gathered from laser scanner into a sort of world-building drawing
+# That is the world/environment visualized using the data gathered off of the laser scanner
+You can also have the video feed of the camera of simulated turtlebot in RVIZ
+
+There are also launch files for SLAM (algorithm to build maps of surrounding while exploring it)
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_method:=gmapping
+roslaunch turtlebot3_teleop turtlebote_teleop_key.launch
+# to be able to make the robot move
