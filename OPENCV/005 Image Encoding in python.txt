@@ -1,0 +1,20 @@
+We have seen the data structures that manupulate images with opencv and analyzed the contents of these datastructures.
+
+However the image can be encoded in different froms that just what we saw in the last note.
+
+This will be a brief overview of the image encoding. Let's first list out different ways of image encoding -
+
+	- Grayscale ( only one channel depicting how dark or bright a pixel is)
+	- RGB
+	- Hue, Saturation, Value (HSV)
+		- Hue Indicates the type of the colour that we see, in 360 degree format
+		  Red - 0 to 60
+		  Yellow  - 60 to 120
+		  Green   - 120 to 180
+		  Cyan    - 180 to 240
+		  Blue    - 240 to 300
+		  Magenta - 300 to 360
+		- Saturation is the indication of how saturated an indvidual color is, i.e, the amount of the gray in the color
+		  from 0 to 100 percent
+		- Value is the brightness or the intensity of the color, from 0 to 100 percent where 0 is completely black and 100 is brightest
+		  and reveals the most colour

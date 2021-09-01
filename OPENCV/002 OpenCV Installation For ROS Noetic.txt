@@ -1,0 +1,25 @@
+INSTALL OPENCV
+The installation of OpenCV in ROS Noetic on Ubuntu 20.04 has changed.
+
+Use the following command instead
+
+sudo apt-get update
+sudo apt-get install ros-noetic-vision-opencv
+In principle, this should work.
+
+In case you face a problem with imshow (as I faced a similar one), you may try the following solution
+
+sudo apt-get install libopencv-*
+pip install opencv-contrib-python
+use pip3 if you use Python 3
+
+This should solve any problem with OpenCV (in case it happens) when you work with ROS Noetic.
+
+In case you still face problems, it is recommended to make a fresh installation of ROS Noetic.
+
+INSTALL USB_CAM
+usb_cam package allows you to get access to the video stream of your camera through a ROS topic. To install the package:
+
+sudo apt-get install ros-noetic-usb-cam
+IMPORTANT NOTE
+When you work with a virtual machine, make sure that the virtual machine has access to the USB cam to be able to run the code and rosnode related to the USB camera.

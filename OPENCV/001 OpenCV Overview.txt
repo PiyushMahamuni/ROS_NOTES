@@ -1,0 +1,48 @@
+Whatever we've done so far in regards of turtlesim or Turtlebot3 is blind motion, motion without being aware of the surroundings.
+
+In more complicated situations or for some applications it is mandatory that robot sees its surroundings for itself and makes the sense of the
+world it lives in. That is it needs a to percieve the real wolrd. The methods and techniquest that allow us to do just that are collectively
+called as "Robot Perception"
+
+Now, computer vision implements methods for acquiring, processing, analyzing and understanding digital images. So, computer vision is widely used
+in robot perception to make the sense of the world for robot using a digital camera.
+
+OpenCV is an opensource library that contains all the tools and techniques which are based on concepts of computer vision and it is very popular.
+Computer Vision in on itself is very challenging to implement but we'll be delagating all those tasks to this library and just focus on higher level
+implementation for our robots required behaviour.
+
+OpenCV-
+	- Open Source
+	- BSD License
+	- Free for both Academics and Commercial use
+	- C++/Java/Python
+	- Windows/Macos/Linux/IOS/Android
+	- Strong Focus on Real-Time (Written in C++ and optimized)
+	
+Operations it can perform -
+	- 2D Image Processing
+	- Image input/output
+	- Video input/output
+	- Camera calibration
+	- Video analysis (motion extraction, feature tracking, foreground extraction,...)
+	- Object detection
+	- Machine Learning, Deep Nueral Networks
+	- GPU Accelarated Computer vision
+	- much more...
+
+One of the basic functionalities of OpenCV is to do the image segmentation.
+	- It is the process of partitioning a digital image into multiple segments
+	- Used to locate objects and boundaries (lines, curves etc) in an image.
+	
+Another Operation - Image Thresholding
+	- Thresholding is the simplest method of image segmentation
+	- i.e. from converting a greyscale image to binary image depending upon the threshold.
+
+Another operations - Drawing
+	- i.e. Drawing different shapes.
+
+Edge Detections
+	- Find the boundaries of an object within the image.
+	- Works by detecting discountinuties in brightness
+	- Used for image segmentation and data extraction.
+	

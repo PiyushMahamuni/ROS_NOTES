@@ -1,0 +1,34 @@
+One of the basic functionalites of OpenCV is to open and save images from files.
+
+Let's see how it works -
+
+Very basic python script with OpenCV --
+<code>
+
+#! /usr/bin/env python
+
+import numpy
+# the data structure that will handle the image.
+
+import cv2
+# import opencv
+
+imange_path = "absolute path recommended over relative path with the .jpg extension"
+
+print("Read an image from file")
+img = cv2.imread(image_path)
+
+print("Create a window holder for the image")
+window_name = "Image"
+cv2.namedWindow(windwo_name, cv2.WINDOW_NORMAL)
+
+print("Display the image")
+cv2.imshow(window_name, img)
+
+print("Press a key inside the image to make a copy")
+cv2.waitKey(0)
+
+print("Image copied to the folder images/copy/")
+cv2.imwrite("images/copy/image_copy.jpg", img)
+
+</code>

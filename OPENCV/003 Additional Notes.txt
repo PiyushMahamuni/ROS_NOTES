@@ -1,0 +1,26 @@
+Source - ROS for beginners course - Udemy
+
+Additional Note about OpenCV installation
+I got feedback from students that they faced a problem with imshow in some cases even after following the installation steps of OpenCV as illustrated in the previous note.
+
+The problem was
+
+    cv2.imshow("RGB Image",rgb_image)
+cv2.error: OpenCV(4.4.0) /tmp/pip-req-build-a3np7pha/opencv/modules/highgui/src/window.cpp:376: error: (-215:Assertion failed) size.width>0 && size.height>0 in function 'imshow'
+and it appears when they use rosrun to execute the ROS node having an OpenCV code to open an image from a file.
+
+After investigation of this problem, it turns out that there could be a problem with accessing the image if its name is referred to as a relative path like this
+
+image_name = "images/tennisball05.jpg"
+
+If you face such a problem, you just need to consider the absolute path to the image and it should work such as for example
+
+image_name = "/home/akoubaa/catkin_ws/src/ros_essentials_cpp/src/topic03_perception/images/tennisball05.jpg"
+
+It is not clear why this happened as it was working fine with previous ROS versions.
+
+Anyway, this note is for those who might face a similar issue.
+
+Fullscreen
+Go to Previous lecture116. [New] Install OpenCV for ROS Noetic
+Go to Next lecture118. OpenCV: Open/Save Image Files (Python)
