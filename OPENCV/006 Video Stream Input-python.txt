@@ -1,0 +1,30 @@
+Typically in robotics, robots get continuous feed of images through cameras so it is mandatory to be able to read video stream.
+OpenCV libraries incorporates this functionality. It is possible to read video streams from camera or video files and save them to some other file.
+
+Reading Video stream from a USB cam, with help of OpenCV in python ----
+
+<code>
+
+import numpy as np, cv2
+
+def main():
+	video_captures = cv2.VideoCapture(0)
+	# 0 - for reading video stream through first video (camera) device connected to the computer.
+	# optionally you can provide the path to the video file also
+
+	# reading a frame at a time
+	while True:
+		ret, frame = video_capture.read()
+		
+		cv2.imshow("Frame", frame)
+		if cv2.waitKey(0) and 0xFF == ord('q'):
+			break
+
+	video_capture.release()
+	cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+	main()
+
+</code>
