@@ -1,0 +1,18 @@
+Thresholding is the simplest process of the image segmentation.
+
+	- Very Simple
+	- Operates on greyscale image (two dimensional arrays)
+	- Algorithm:
+		If a pixel value is greater than a certain threshold, it is assigned a certain value (e.g. 255 for white) and if
+		it is lower than the threshold value, it is assigned another certain value (e.g. 0 for black)
+	- Types:
+		Simple Thresholding
+			cv2.threshold(gray_image, threshold_value, max_value, threshold_style)
+			There are different thresholding styles predifined in opencv ( The same names are defined as enumarator in C++ libraries just
+			drop the cv. part)
+			cv.THRESH_BINARY - max_val if gray_image[x,y] > threshold_value else 0
+			cv.THRESH_BINARY_INV - 0 if gray_image[x,y] > threshold else max_val
+			cv.THRESH_TRUNC - threshold if gray_iamge[x,y] > threshold else gray_image[x,y]
+			cv.THRESH_TOZERO - gray_image[x,y] if gray_image[x,y] > threshold else 0
+			cv.THRESH_TOZERO_INV - 0 if gray_image[x,y] > threshold else gray_image[x,y]
+		Adaptive Thresholding
