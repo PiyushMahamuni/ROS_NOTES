@@ -1,0 +1,22 @@
+Color filtering is an interesting technique in computer vision and image processing.
+
+e.g. You have a yellow tennis ball on a turf. Clearly the tennis ball has very distinctive color compared to the turf and we can use this feature
+to filter out anything which is not yellow to determine the location of tennis ball in the given image. or number of tennis balls for that matter.
+
+Color Filtering -
+	Displaying only a specific color range in the image.
+	Usage: Detection of objects with specific colors
+	
+	Algorithm:
+		Read image as RGB image
+		Convert image to HSV image ( Since it is easier to define precise color range in HSV format, you have to define only Hue values
+		and in RGB format the lighting will cause the color to be technically different where in HSV it just has different saturation)
+		(HSV is more robust to external lighting changes, search HSV colorspace and you'll get it)
+		Define the upper and lower color ranges
+		Create the mask based on the image
+	
+	# Note -
+	OpenCV uses different ranges for HSV -
+		Hue - 0 to 180
+		Saturation - 0 to 255
+		Value - 0 to 255
