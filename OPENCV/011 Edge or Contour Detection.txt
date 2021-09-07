@@ -1,0 +1,36 @@
+Contours -
+
+	Edge (countour) detection is an image processing technique for finding the boudaries of the object with images.
+		Contours are the curves joining all the continous points (along the boundary), having some color intensity
+		It works by detecting the discontinuties in the brightness
+	
+	Usage -
+		Useful tool for shape analysis, image segmentation, and object detection and recognition
+	
+	Algorithm -
+		Read image in RGB format
+		Convert image to grayscale format
+		convert the gray image to binary image
+		Find the contours using the cv2.findContours() applied to the binray image (using thresholding)
+		Process contours (find its areas, enclosing circles, perimeter, moment and centroid)
+
+
+Contours Hierarchy-
+	In opencv contours follow certain hierarchy
+	
+	In an image some shapes are inside the others
+	The outer shape is called parent, and the inner shape is the child
+	Because of this, There are several ways to retrieve the contours from an image.
+	
+	RETR_LIST: The simplest way is to retrieve contours as a list. Doesn't create any parent child relationships. Parents and child are equal under
+	this rule (i.e. they are all just contours of the same heirarchy)
+	
+	RETR_EXTERNAL: If you use this flag, it returns only extreme outer flags. All child contours are left behind. We can say under this law, only
+	the eldest in the every countour family is taken care of.
+	
+	RETR_CCOMP: This flags retrieves all the contours and arranges them to a 2-level hierarchy. ie external contours of the object (ie its
+	boundary) are placed in hiercarchy 1. And the contours of holes inside object (if any) are placed in hierarchy-2
+	
+	RETR_TREE: It retrieves all the contours and creates a full family hierarchy tree.
+	
+	
