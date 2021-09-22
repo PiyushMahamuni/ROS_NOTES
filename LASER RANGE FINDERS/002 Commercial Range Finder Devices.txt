@@ -1,0 +1,72 @@
+There are numerous commercial range finders available in the market. This section only covers the ones which are most popular.
+
+1. Hokuyo URG-04LX-UG01 
+	Max Range: 01-5.6 m
+	Max Field View: 240 deg [-120 deg to 120 deg]
+	Environment: Indoor
+	Scan Freq: 10 Hz
+	Voltage: 5 V
+	Current: 0.5 Amp
+	Interface: USB 2.0
+	Price: +1000 USD
+
+2. RPLIDAR A2
+	Max Range: 0.15 to 6 m
+	Max Field View: 360 deg [-180 t0 180 deg]
+	Environment: Indoor
+	Scan Freq: 10 Hz
+	Voltage: 5 V
+	Current: 0.45 A
+	Interface: UART
+	Price: +470 USD
+
+3. SICK LMS151
+	Max Range: 0.5 to 20 m
+	Max Field of View: 270 [-135 to 135]
+	Environment: Outdoor
+	Scan Freq: 25 Hz or 50 Hz
+	Voltage: 10.8 to 30 V (DC)
+	Interface: Ethernet, Serial, CAN-bus
+	Price: +5200 USD
+
+4. Hokuyo UTM-30LX
+	Max Range: 1 to 30 m
+	Max Field of View: 270 [-135 to 135]
+	Environment: Outdoor
+	Scan Freq: 40 Hz
+	Voltage: 12 V
+	Current: 0.7 A
+	Interface: USB 2.0
+	Price: +4700 USD
+
+RGBD camera - D stands for depth ( act like range finders and cameras all in one)
+
+1. Orbecc Astra S
+	Max Range: 0.5 to 8 m
+	Max Field of View: 60 deg Horizontal x 49.5 deg Vertical x 70 deg Diagonal
+	Environment: Indoor
+	Depth Image Size: 640 x 480 (VGA) 16 bit @ 30 FPS
+	Voltage: 5V
+	Interface: USB 2.0
+	Price: +170 USD
+
+2. Intel RealSense(TM) Camera R200
+	Max Range: 0.5 to 3.5 m
+	Max Field of View: 60 deg Horizontal x 49.5 deg Vertical x 70 deg Diagonal
+	Environment: Indoor
+	Scan Freq: 40 Hz
+	Voltage: 5 Hz
+	Interface: USB 3.0
+	Price: +170 USD
+
+Lidar scanners ( Makes only one scan in front direction )
+1. LIDAR-Lite v3
+	Compact optical distance measurement sensor
+	Max Range: 0 to 40 m
+	Voltage: 4.75 to 5 V (DC), 6V max
+	Environment: Indoor/Outdoor
+	Optical Aperture: 12.5 mm
+	Interface: I2C or PWM
+	Rate: 1 to 500 Hz
+	Price: +130 USD
+	

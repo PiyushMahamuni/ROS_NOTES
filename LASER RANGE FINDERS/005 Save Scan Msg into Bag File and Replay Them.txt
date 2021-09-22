@@ -1,0 +1,21 @@
+rosbag is a utility in ROS that allows to record the messages published by topics into a file, and them replay them again.
+This technique is useful to develop and test algorithms and replay existing scenarios or experiments.
+
+First of all start the roscore.
+Start the node that publishes the scan topic. Either a simulated robot, driver for a sensor...
+Create a static transform publisher ( The data we will record )
+	rosrun tf static_transform_publisher 0.0 0.0 0.0 0.0 0.0 0.0  1.0 map laser 10
+
+Create a new folder to store the recorded information with rosbag
+	mkdir bagfiles
+	cd bagfiles
+
+start the recording with rosbag
+	Record every messages passing through ros environment
+		rosbag record -a
+	This way the rosbag nodes now subsribes to all existing topics and stores the messages published with a relative timestamps
+	to stop recording you just press ctrl+c in the terminal where you are running rosbag
+
+To see the recorded bag files, go to the dir from where you ran the rosbag command and there you'll find those bag files
+To see the info of a bag file you can use - rosbag info <bag file path>
+To play the bag file you just run - rosbag play <bag file path>

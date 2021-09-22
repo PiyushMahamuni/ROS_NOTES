@@ -1,0 +1,22 @@
+These are sensors used used by robots to perceive the depth of the surrounding world.
+
+These are subcategories of sensors called Range Finders. Ultrasonic sensors, radar, sonar are some other examples of range finders.
+
+Laser Scanners:
+	Device that can measure the distance to obstacles
+	Uses laser beams
+	Used for several robotics application
+		SLAM: building maps (Simulatenous localization and mapping)
+		Obstacle Avoidance
+		Navigation
+		
+LASERR RANGE FINDERS CHARACTERESTICS:
+	Minimum angle: 	Start angle of the scan
+	Maximum angle:	End angle of the scan
+	Angle Increment (angular resolution):	Angular Distance between measurements
+	Time Increment:	time between measurements
+	Scan time: time between two scans
+	Minimum Range: Minimum observable range value
+	Maximum Range: Maximum observable range value
+	List of Range: List of all measurements in a scan
+	List of intensities: list of all intensities in a scan

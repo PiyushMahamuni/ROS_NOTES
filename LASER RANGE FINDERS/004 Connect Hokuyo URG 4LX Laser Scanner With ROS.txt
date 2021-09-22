@@ -1,0 +1,11 @@
+Laser Range Finder Hukoyo URG 04-LX
+
+Start urg_node package
+	rosrun urg_node urg_node
+	# generic node to connect and access many Hokuyo sensors
+	# using this node, all the info coming from the laser range finder will be published onto topic /scan
+
+Create a TF transform between /map and /laser frame
+	rosrun rf static_transform_publisher 0.0 0.0 0.0 0.0 0.0 0.0 1.0 map laser 10
+
+open with RVIZ and test with rostopic echo

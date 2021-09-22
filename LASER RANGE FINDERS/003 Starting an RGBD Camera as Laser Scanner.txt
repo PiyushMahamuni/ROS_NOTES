@@ -1,0 +1,14 @@
+RGBD camera this note talks about: Asus Live Pro
+
+Steps:
+	Start the drivers of RGBD camera. We'll use the Openni Package provided with ros for this
+		roslaunch openni2_launch openni2.launch
+		# this is a generic driver that works with many commercially available RGBD cameras
+		# you'll have to perform certain configurations if you want to use any other RGBD camera other than Asus Live pro for
+		# ros noetic
+	
+	Convert Depth Image to Laser Scanner using ROS package depthimage_to_laserscan 
+		rosrun depthimage_to_laserscan depthimage_to_laserscan image:=<depth image topic>
+	Open with rviz and test rostopic echo
+
+

@@ -1,0 +1,7 @@
+Steps:
+	1. Start the drivers of the laser scanner or start the simulations providing you with laser scan topics
+	2. Make sure that /scan topic is available
+	3. Write a node that subscribes to /scan topic
+	4. Write a callback function that recieves /scan messages and process them.
+
+refer to /src/Perception/_01Scan_Subscriber.py and /src/Perception/_01Scan_Subscriber.cpp node in github.com/PiyushMahamuni/roslearning repo
