@@ -1,0 +1,50 @@
+Whenever you want to add new hardware (sensor/acutuator) in your ros ecosystem, either you can write driver nodes that publishes info to ros topics.
+	Very time consuming and complicated process.
+Or you can use a microcontroller to communicate with the hardware with well established libraries for their communication and use rosserial to send
+the needed data onto the ros ecosystem. Sometimes you may actually want to communicate directly with this microcontroller and don't care much about the data microcontroller is sharing with its other peripherals.
+--------------------------------------------------------------------------------------------
+
+
+Why rosserial -	
+	Integration of microcontrollers and embedded systems into ROS
+	Adding new embedded hardware (sensors, controllers, ...)
+	Need for a communication protocol between new hardware and ROS
+	Without rosserial, you'll have to reinvent the wheel and new hardware drivers.
+	
+	rosserail allows new electronic hardware to be integrated in ROS ecosystem with ease.
+	No need to devlop custom drivers and communication protocols.
+
+What is rosserial ?
+
+	rosserial is a protocol for wrapping standard ROS serialized messages and multiplexing multiple topics and services
+	over a character device such as a serial port or network socket.	
+
+
+Rosserial Client Libraries
+	Different client libraries were developed to get ROS up and running and various systems.
+	
+	rosserial_client: the generic client side rosserial implementation. It is designed for microcontrollers and it can run on any processor for
+	which you have an ANSI C++ compiler and a serial port connection to a computer running ROS
+	
+	rosserial_arduino
+	rosserial_embeddedlinux
+	rosserial_windows
+	rosserial_mbed
+	rosserial_tivac
+	rosserial_stm32
+	ros_teensy
+
+
+ROS-side Interfaces
+	above are the libraries that the new hardware (aka microcontroller) will use to communicate to ROS ecosytem over a character device
+	on the other side i.e. on the computer running the ROS ecosystem and receiving data over these character devices you'll need ROS-Side
+	Interfaces to extract the incoming data in a meaningful way.
+	
+	rosserial_python: A python based implementation (recommended for PC usage)
+	rosserail_server: A C++ implementation, is difficult to work with compared to rosserial_python but is recommended for high performance
+	requirements.
+
+
+SCHEMATIC REPRESENTATION
+
+	[ROS ECOSYSTEM] <---> [rosserial_python or rosserial_server] <--character device--> [rosserial_client library running on new hardware]

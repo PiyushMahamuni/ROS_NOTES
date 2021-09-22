@@ -1,0 +1,42 @@
+ROS PUBLISHER IN ARDUIN0
+
+install rosserial arduino with
+	
+	sudo apt-get install ros-noetic-rosserial-arduino
+	sudo apt-get install ros-noetic-rosserial
+	
+	goto your arduino installation directory <arduino>/libraries
+	
+	remove ros_lib directory if already present with rm -rf ros_lib
+	
+	install ros_lib arduino client library in IDE with -
+	rosrun rosserial_arduino make_libraries.py
+	
+	Now, all the required ROS libraries for arduino IDE have been installed.
+
+Open Arduino IDE
+
+In File->Examples you should find `ros_lib` option. Choose ros_lib->HelloWorld
+You are now seeing the code for a ROS publisher which will run off of an arduino board which publishes string "Hello World" onto the
+topic "chatter"
+
+-------------------------------
+Interesting Key Observations about rosserial_arduino-
+
+	1. You can initialize ros::NodeHandle object before making a call to ros::init() when working with rosserial library
+	   But we couldn't do that in roscpp client library
+	2. The ros::init() function is not called in rosserial_arduino, instead, ros::NodeHandle::initNode() is called, without any parameter
+	   specifying
+	   the node name through the nodehandle object you declared.
+	   
+	   We are not specifying node names for programs running off of specific controllers becuase maybe, all those serial messages are eventually
+	   intercepted by rosserial_python or rosserial_server and then published to ros enviroment in their respective topics and similar situation
+	   when messages travel the other way around. Point is, the rosserial_python node or rosserial_server node will be the one publishing to
+	   all those topics we declare while programming microcontrollers or embedded systems and it will be the one which is subscribed to
+	   all those topics these microcontrollers need to be subscribed to.
+	
+	3. The way ros publishers are created are different. You first create the publisher, can do this even before calling the nh.init()
+	   Then you pass the publisher object to nh.advertise() function and you now have setup your publisher object.
+	
+	4. While creating the publisher, you use the following syntax and semantics:
+	   ros::Publisher chat_pub("Chatter", &str_msg);
