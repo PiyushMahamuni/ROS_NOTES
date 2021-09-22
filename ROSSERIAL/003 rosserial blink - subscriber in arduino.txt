@@ -1,0 +1,8 @@
+visit 
+
+wiki.ros.org/rosserial_arduino/Tutorials for more comprehensive exercise and understanding
+
+Open the arduino IDE from your ROS workstation. In files->examples->ros_lib->blink
+
+use rostopic pub /toggle_led std_msgs/Empty -r <2 * frequency at which you want to operate the LED>
+with the ros ecosystem for this example
