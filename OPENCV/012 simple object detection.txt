@@ -1,0 +1,17 @@
+# We discuss the some details and psuedo code to track a colored ball
+
+# We will identify the ball using color filtering in an image. Then we detect the contour of the ball, draw it's center location and
+# an enclosing circle
+
+What is color filtering?
+Display only a specific range of colors in the image
+Usage: detection of objects with specific colors
+
+Algorithm:
+	Read image as BGR image
+	Filter color of the object (ball in this case)
+	Apply contour detection
+	Get centroid of the ball
+	Display information
+
+
