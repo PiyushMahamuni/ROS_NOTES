@@ -1,0 +1,26 @@
+Robot navigation is a complex problem requiring knowledge of linear algebra, geometry, trigonometry, physics, mechanics...
+However ROS makes it very easy for us to make the robot navigate in space.	
+
+STEP 1: START THE TURTLEBOT3 SIMULATOR
+	roslaunch turtlebot3_gazebo turtlebot3_house.launch
+	
+	* You need to setup TURTLEBOT3_MODEL environment variable every time you open a new terminal before running any turtlebot3 related CLI commands
+
+
+STEP 2: SETTING THE INITIAL LOCATION OF THE ROBOT.
+	in ROS navigation stack, before the robot has started, it assumes a location from the map file for where it is in the map.
+	This initial location may not coincide with the initial location in the gazebo simulation and this will cause errors in performance as
+	the robot and navigation stack are not in proper communication with each other.
+	
+	In RVIZ you can use the `2D POSE ESTIMATE` button/tool to tell (approximately) where the robot is and how it is oriented.
+	The navigation stack then can acquire data about surrounding from the robot to then exactly figure out where it is in the map.
+	
+	You might have a question then, if the robot with navigation stack can figure out where it is after the simulation and robot has started,
+	then why do we need to initialize approximate position either? Reason being there could be similar looking parts of map and robot can only
+	see / map real world so far and there could be ambiguity after the robot has started for it's location and orientation. Also, the way
+	navigation stack is implemented, it is relying on vectors and vector fields and might be operating on multidimensional space and
+	working with partial derrivatives, slopes and intricate mathematical concepts, which will give different results for different initial
+	state.
+
+STEP 3: UNDERSTANDING FRAMES. 
+	This will be covered in detail in next note, 003\ Frames.txt

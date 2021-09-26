@@ -1,0 +1,21 @@
+Now the question, what is the location and orientation of the robot? We can obtain these informations like any other information with ROS topics.
+
+start the turtlebot3 house simulation along with turtlebot3_rviz and find out the list of ros topics with `rostopic list`
+
+Now in the RVIZ tool, the grid and map is shown. The grid has spatial distance of 1m. and the centre of the grid (literal geometric) is the 
+origin point (0,0) and the location will be encoded with reference to this point.
+This whole grid is what is called a reference frame. Since we use this frame to (refer this frame) to determine the location of the robot.
+
+We can visiulise these frames using TF package which show us all the types of frames.
+	Click the `Add` button at the left bottom of RVIZ tool, scroll down the list and add TF topic, after this you'll see axes of different frames
+	along with map and grid on the RVIZ visualization window.
+	
+	You can now also see the list of available frames and even select the one you'd like to be visualized.
+	You can choose one of them to be the fixed frame. Usually this is the global map frame and all the frames associated with your robot are
+	free to move. You can change this setting and the data visualization will change accordingly.
+	
+	In summary, frame is a reference that is used to localize objects/robots
+
+The topic that represents the location of the robot:
+
+	**** NOTE IS INCOMPLETE ****

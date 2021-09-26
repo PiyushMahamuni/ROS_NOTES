@@ -1,0 +1,31 @@
+Localization, Navigation and simultaneous localization and navigation are techniques/concepts very important for mobile robotics.
+These concepts/tools together will allow your robot to navigate complex environments, take motion decisions based on surroundings autonomously
+
+The turtlebot3 ros package is what we will use in this part.
+
+Turtlebot3 has several already defined environments
+	
+	Turtlebot3 empty world environment.
+		roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+	
+* To teleoperate the robot with keyboard -	
+	roslaunch turtlebot3_teleop turtlebot3_teleop_key.lanuch
+
+	Turtlebot3 world / maze environment
+		roslaunch turtlebot3_gazebo turtlebot3_world.launch
+	
+	Turtlebot3 house environment
+		roslaunch turtlebot3_gazebo turtlebot3_house.launch gui
+	
+A very important tool while working with navigation and localization is RVIZ (ROS visualization)
+	roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
+
+	Turtlebot3 SLAM for map building
+	roslaunch turtlebot3_slam turtlebot3_slam.launch slam_method:=gmapping
+	roslaunch turtlebot3_teleop turtlebot3_teleop_key_launch
+	
+
+** gazebo launches have a default argument, gui. to start a headless launch, which puts less strain on your machine
+** (you may want this since you will be using RVIZ anyway or not as interested in seeing the visualization of simulation)
+** you can use gui:=false. e.g.
+** roslaunch turtlebot3_slam turtlebot3_slam.lanuch slam_method:=gmapping gui=false	

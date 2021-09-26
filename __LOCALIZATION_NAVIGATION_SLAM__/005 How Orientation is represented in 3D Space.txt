@@ -1,0 +1,4 @@
+In the messages published by the /odom or /amcl_pose, you'll find the filed pose which again has a filed with same name pose with two fields
+1. position and 2. orientatoin. The position is a standard 3 dimensional vectors locating a point in 3D cartensian space but the orientation
+is a 4 dimensional vector - [x, y, z, w] and in fact is a quaternion. Quaternions are very elegant and efficient in representing and transforming
+from one orientation to other.

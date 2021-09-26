@@ -1,0 +1,14 @@
+Let's perform a small navigation demo
+
+Typically we want to send the robot to specific location and robot should navigate itself to that location autonomously. This is simple with ROS.
+We just need to send a goal location to the robot and the navigation stack will make the robot navigate to it while avoiding any obstacles.
+
+In the ROS RVIZ, (start a turtlebot3_gazebo simulation and turtlebot3_rviz launch files) you'll see two types of planner listed in the left hand
+side ribbon/tab. Global map (planner) and local map (planner). We can use the 2D nav goal button on ribbon below the title bar in RVIZ to send or
+define the goal location in the robot. To define the goal location, you need to define both the positin and orientation.
+
+After defining the goal location, you can see in the RVIZ visualization the static path being shown. This static path is planned with the help of
+global planner and is obstacle free. Now the path is then followed ( or tried to follow to the best of robot's capabilities while avoiding any
+unforseen/added or removed obstacles) using robot's local path planner. The local path planner has more narrow range than global one but is able to
+avoid dynamic obstacles. (it real time feedback from the robot's sensor to map it's immideate vicinity while the global path planner worked with
+a latest global map which is static in nature to set a overall path to reach the target location )

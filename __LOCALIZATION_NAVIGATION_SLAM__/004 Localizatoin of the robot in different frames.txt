@@ -1,0 +1,25 @@
+Now we want to localize the robot's location. If you have observed the rostopic list, you will find that there are several topics that refer to the
+locatoin or used /can be used to localize the robot.
+
+TOPICS:
+	
+	/odom - represents the location of the robot based on the odometry information gathered so far
+	
+		run a rostopic echo /odom
+		
+		You will find several fields in the message.
+		a header with seq number, time stamp and frame_id (telling what type of frame this topic is dealing with/ for which frame, the topic is
+		publishing the messages)
+		
+		child_frame_id field, pose field, and a twist field
+		
+	/amcl_pose - represents the global pose of the robot in the environment with respect to the global map frame.
+	* So it is important to keep in mind that the robot has different location values depending upon the frame you're looking at.
+		
+		run rostopic echo /amcl_pose
+		The fields are identical to that of the /odom, that is both topics use the same message type
+		Of course, these different topics publish values related to their frame.
+	
+	* In turtlbot3 simulation that you are running right now, you will find that in RVIZ the global map frame and odom frame are slightly shifted
+	from each other. There might be some reason to this but becuase of this the values topics /odom and /amcl_pose publish are slightly different
+	from each other.
