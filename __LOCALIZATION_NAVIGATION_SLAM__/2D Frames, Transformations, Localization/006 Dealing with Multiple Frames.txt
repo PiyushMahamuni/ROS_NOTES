@@ -1,0 +1,53 @@
+Now that we understand the concept of frame and how to localize a point (objects/robots) for that frame, we want to know how to localize
+a point in a frame which is already localized in another one, Since in real life application there might be several frames (static and dynamic)
+e.g. Frame of a camera, Frame of a base station, Frame of a Launch pad, Frame of another robot which is in the same proximity and so on...
+
+
+For the discussion of frame transformation (i.e. dealing with multiple frames) we often use a term `world frame` which is nothing but a frame with
+arbitrarily defined origin running off to infinities. In this frame, all that we care about is the relative properties of two frames, (i.e. locating
+one frame inside another frame by localizing it's origin)
+
+It's simple really, to transform one frame into another, your move it (translate), rotate it and scale it. (We don't perform shear in any of these
+linear transformations, all the frames have their x and y axis perpendicular to each other with y axis leading with 90 degrees in cclk direction)
+
+Here comes the vectors and matrices -
+
+|x| = |x'| |cos(rtheta) -sin(rtheta)| * rscalar^-1 + |xw1|
+|y|   |y'| |sin(rtheta)  cos(rtheta)|			   	 |yw1|
+
+and theta = rtheta + theta`
+
+Here, x' and y', cordinates of a point in F{w1} frame
+rtheta - relative angle in radians the F{w1} Frame makes with F{world} i.e. F{w} Frame.
+xw1, yw1 = origin of F{w1} Frame located in F{world} Frame
+x, y = cordinates of the same point but in F{world} Frame.
+theta = angle of object/robot in F{w} Frame.
+theta` = angle of object/robot in F{w1} Frame.
+scalar = relative scaling of Frame{w1} w.r.t Frame{world}. (length of vector [1, 0] from Frame{w1} in Frame{world})
+
+The above mathematical expressions can be expressed even more simply with complex numbers (since all these linear transformantions don't have shear
+involved, only rotation, translation and scaling, we can get by just using complex numbers to represent location instead of vectors and matrices)
+
+x + iy = [x' + iy'] * [cos(rtheta) - isin(rtheta)] * scalar^-1 + [xw1 + iyw1]
+
+
+Most of the time the Robot will be aware of its location (i.e. Pose) in the arbitrarily defined world frame and it will localize an object in
+it's own frame using on board sensors. The common problem in localization then becomes, what is the location (Pose) of this newly localized object
+in the world frame. That is finding out the cordinates (and orientation) of an object relative to world frame which is already localized in robot's
+frame.
+
+Though two of the above transformations are perfectly fine and even the one with the complex number is computationally optimum, to suit the
+general transformation of data from one frame to another, matrices and vectors include all the tools necessary, albeit operations can become bit
+more computationally taxing. Also for the reason that we don't scale two frames relative to one another in ROS, makes it best choice to always
+use matrices to perform transformations.
+
+|x| = |cos(rtheta) -sin(rtheta) xw1| * |x'|
+|y| = |sin(rtheta)  cos(rtheta) yw1| * |y'|
+|c| = |0			0			C  | * |1 |
+
+Here, C is any arbitrary contant, doesn't matter. It could be even 0 but it is common practice (maybe for some particular reason) to keep value
+of C = 1.
+The vector (x, y, C) and (x', y', 1) are represented in what is called Homogenous Coordinate sytem
+while the transformation matrix in above equation is called the Homogenous Transformation Matrix
+
+** NOTE, IN ALL OF THESE MATHEMATICAL EXPRESSIONS, ANGLES ARE POSETIVE IF THEY ARE EXPRESSED IN CCLK DIRECTION
