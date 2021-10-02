@@ -1,0 +1,10 @@
+Basic concept is that you have a robot in a (certain) space.
+The next thing you think about is how to express the location (position and orientation) of that robot within that space.
+This is the fundamental question for localization and navigation.
+
+To specify the location of robot within a space, we need to specify an arbitrary location of a reference point in that space relative to which
+we can locate the robot.
+
+Learning Outcomes -
+	1. Understand the concept of pose and coordinate frames.
+	2. Represent the position and orientation of the robot in space.

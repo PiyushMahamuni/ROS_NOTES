@@ -1,0 +1,15 @@
+Imagine that you have a robot in space
+The robot is located at certain position and is oriented towards facing a certain direction.
+Pose is combination of physical position and orientation
+
+To measure the position and orientation, we need to have a reference relative to which we can take this measurements.
+Look at '003 coordinate frame and pose.png' from this directory. That is a cordinate frame in two dimensional space (since it has only two axis).
+Here the name of the coordinate frame is `w` and location is respresented in terms of this cordinate frame. To make it apparent, the writing
+convention is to represent the location as - (x^{w}, y^{w}, theta^{w}) - (8, 5, 45 degrees)^{w}
+This is how the Pose of the robot is expressed in the programs, as a tuple.
+
+Look at '004 Frame Example 1.png' and '005 Frame Example 2.png' to consolidate concept of frames.
+
+Now that we have understood concept of Frame, how we can localize robot (any point) whose Pose value in known in one frame in another?
+For this, we need to understand the concept of Frame Transformation. (that is converting a frame into another frame by means of algebraic
+operations). This is explained in the note '006 Dealing with multiple frames.txt'
