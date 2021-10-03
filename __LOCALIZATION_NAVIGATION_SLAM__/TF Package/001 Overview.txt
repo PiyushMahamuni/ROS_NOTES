@@ -1,0 +1,20 @@
+ROS provides very efficient and useful library - the TF package.
+TF package embeds all operations related to frames and transformations, which makes it easy and straightforward to utilize them.
+
+with the help of TF package you can -
+	1. Manupulate frames in ROS
+	2. Perform Transformations using TF package.
+	
+
+WHAT IS TF -
+	TF stands for transformation library in ROS
+	It performs computations for transformations between frames.
+	It allows the find the Pose of any object in any frame using transformations
+	
+	A famous quote in robotics - "A robot is collection of frames attached to its different joints"	
+	see image '002 frames in robot.png'
+	
+	You can observe that there are several frames attached to the body of the robot.
+	The red axes represent the x axis for all those frames, while the green axes represent the y axis and blue axes represent the z axis.
+	
+	You can observe that at the top of the turtlbot3, there's a laser scanner and a frame attached to it.

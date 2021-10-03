@@ -1,0 +1,46 @@
+Now that we've seen what a frame, what is need of having to deal with more than one frame and how to transform between two frames (localize a point
+already located in a frame in another frame), we need to know how these frames are actually defined and implemented in ROS.
+
+In ROS, every robot is described in an xml file using the Uniform Robot Description format or URDF.
+URDF is simply an xml document that represents the robot model. It defines all the joints of the robot and its shape using. A frame is attached to
+to a joint is called a link. Parent-child relations are defined between different frames.
+The relative position between the joints are defined as the transformations specified by the translation vector and a rotation vector
+The translation vector is represented with xyz parameter of origin tag and rotation vector is represented with rpy argument (roll-pitch-yaw)
+for example -
+
+<?xml version="1.0" ?>
+<robot name="turtlebot3_burger" xmlns:xacro="http://ros.org/wiki/xarco">
+	<xacro:include filename="$(find turtlebot3_description)/urdf/common_properties.xacro"/>
+	<xacro:include filename="$(find turtlebot3_description)/urdf/turtlebot3_burger.gazebo.xacro"/>
+<link name="base_footprint"/>
+<joint name="base_joint" type="fixed">
+	<parent link="base_footprint"/>
+	<child link="base_link"/>
+	<origin xyz="0.0 0.0 0.01" rpy="0 0 0"/>
+</joint>
+
+<link name="base_link">
+	<visual>
+		<origin xyz="-0.032 0 0.0" rpy="0 0 0"/>
+		<geometry>
+			<mesh filename="package://turtlebot3_description/meshes/burger_base.stl" scale="0.001 0.001 0.001"/>
+		</geometry>
+		<material name="light_black"/>
+	</visual>
+	
+	<collision>
+		<origin xyz="-0.032 0 0.070" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.140 0.140 0.143"/>
+		</geometry>
+	</collsion>
+	
+	<inertial>
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+		<mass value="8.257304e-01"/>
+		<inertia ixx="2.212e-03" ixy="-1.2294e-05" ixz="3.493878e-05"
+				 iyy="2.119e-03" iyz="-5.0120e-06" izz="2.006427e-03" />
+	</inertial>
+</link>
+
+Fore more info on URDF - http://wiki.ros.org/urdf/Tutorials

@@ -1,0 +1,24 @@
+TF PACKAGE NODES-
+	The TF package has several ROS nodes that provide utilities to manipulate frames and transformations in ROS.
+		1. view_frames: visualizes the full tree of coordinate transform.
+		2. tf_monitor: monitors transform between frames.
+		3. tf_echo: pritns specified transform to the screen.
+		4. roswtf: with the tfwtf plugin, helps you track down the problems with tf.
+		5. static_transform_publisher is a command line tool for sending static transforms.
+
+view_frames is a graphical debugging tool that creates a PDF graph of your current transform tree. command -
+	rosrun tf view_frames
+
+You probably want to view the graph when you are done, so a typical usage on Ubuntu sytems is:
+rosrun tf view_frames
+evince frames.pdf
+
+Therefore an helpful shortcut to add in your .bashrc is:
+alias tf='cd /var/tmp/ && rosrun view_frames && evince frames.pdf &'
+
+Note: rqt_tf_tree that allows you dynamic inspection of frames.
+
+* Usually the map frame denotes the global frame in ROS that is used to refer to the global loation of the robot and objects in space.
+The odom frame is frame relative to the odometry motion of the robot.
+the base_footprint frame is generally the frame attached to base of the robot at its center.
+Other child frames refer to different components and joints of the robot.

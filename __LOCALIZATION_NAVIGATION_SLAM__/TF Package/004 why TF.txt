@@ -1,0 +1,26 @@
+Now the question is, why TF is important for ROS.
+
+The robot will incorporate several sensors (LIDAR, SONAR, DEPTH CAMERA'S and so on) to gather data about its environment and create map of the
+world in reference to that sensor. Now, firstly the robot may need to fuse the information gathered from several sensors into a single frame.
+i.e. to transform every point located with the help of a certain sensor from that sensors frame to a specific global frame.
+
+And secondly, it might have to perform navigation of some sorts (actual movement of whole robot body or parts of robot) in that environment during
+which the frames attached to various mechanical links and joints of robot will move and will need to be updated by transforming them to new rotation
+and position from late orientatoin and translation.
+
+For these operations, you'll need to perform transformation quite often and exhaustively, implementing the math of these transformation on your own
+could be quite cumbersome and also having a industry wide standard for these kind of computation, a common library that handles all these
+transformation means robotics software developers don't have to write their own code and don't have to learn new libraries to do so.
+
+Integrating this TF package in ROS is very essential since almost every robot has some kind of moving parts and is interacting with the objects
+from the real world in some way. Frames and transformations then play an essential role in developing the behaviour of these robots.
+
+The TF package hence also provides APIs to listen to these transformations and extract useful information that helps accomplishing the task.
+This is very easy since the all the frames attached to sensors, bodies, actuators, surfaces/parts of relevance have been described in the URDF
+document and you don't have to define them in your cpp or python program, just use the information of frames published within these frames,
+apply the transformations using TF package's programming APIs
+
+Benefits of TF-
+	Performs Transformations easily.
+	The user does not need to worry about frames.
+	Provides built-in functions to publish and listens to frames in ROS.	
