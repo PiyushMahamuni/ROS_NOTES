@@ -1,0 +1,55 @@
+We have already seen how orientation is represented with the rotation matrix which is obtained by multiplying Rx, Ry, Rz orientatin matrices.
+However there are several other ways to represent the orientation in 3D space.
+
+There are three major ways to represent the orientation-
+	1. Three angle representation
+		a. Euler Rotatoin 	
+		b. Cardan Rotation
+	2. Rotation About arbitrary Vector
+	3. Quaternions (The one used in ROS)
+
+
+1. THREE ANGLE REPRESENTATION -
+	Three angle representation means that there are 3 axis that are used to make rotation around
+	1. Cardan Rotation sequence:
+		Characterized by rotations about all three axes (You'll get sequence of 3 angles - pitch, roll, yaw)
+	2. Euler Rotation Sequence:
+		Involves repitition but not of successive of rotations about one particular axis.
+		(You rotate frame only ever about two axes but in a segmented fashion. You rotate one axes, let go of it, rotate another axes
+		in it's new position, rotate the first axes again - You get a sequence of 3 angles out of it)
+		** This is author's interpretation of Euler Rotation Sequence gained while learning about orientation in an online course, it might not
+		be accurate.
+
+
+2. ROTATION ABOUT ARBITRARY VECTOR -
+	In 3D space, orientatoin can be expressed as a rotation about an axis.
+	Consider any arbitrary unit vector in 3D space, attach other axes to it's tail and imagine a rigid wireframe body with 4 arrows.
+	rotate the frame around the arrow of arbitrary unit vector that you imagined, you'll see the 3 axes ( the 3 arrows of the wireframe) are also
+	rotating. Rotating the frame around this new vector gives you a particular range [set] of new rotations. You can select any such arrow
+	and take the original axes to any desired rotation. For given rotation, finding out this vector and then representing the rotation as an
+	angle (rotation) around this arbitrary vector is how this representation works
+	
+	This means, for any rotation, there exists some axis at certain orientation around which by rotating the whole frame, you'll get the
+	resulting rotation.
+	
+	Rodrigues formula can be used to extract the rotation matrix back from the information of the arbitrary vector u and rotation around that
+	vector theta -
+	R = I cos(theta) + sin(theta)[u]x + (1-cos(theta)) u (cross product) u,
+
+
+3. QUATERNIONS -
+	Quaternions are the most preferred and hence the important way to represent the orientation in 3D space.
+	A quaternion is combination of 4 numbers where 3 of them represent the cordinate of a vector and the 4th one is the scalar
+	q = s <v1|v2|v3>  [ s=scalar, v1,v2 and v3=vector coordinates]
+	q = s + v
+	q = s + v1 i + v2 j + v3 k
+	i^2 = j^2 = k^2 = ijk = -1
+	In ROS the notation used are - (x, y, z, w) i.e. (x, y, z, w) = (s, v1, v2, v3)
+	
+	the symbols x, y, z, w or s, v1, v2, v3 can also be represented as q0, q1, q2, q3
+	
+	Quaternion benefits -
+		1. Compared to Euler angles, they are simpler to compose and avoid the problem of gimbal lock.
+		2. Compated to rotation matrices, they are more compact, more numerically stable and are more efficient.
+		3. Quaternions have applications in computer graphics, computer vision, robotics, navigation, molecular dynamics, flight dynamics, orbital
+		   mechanics and crystallographic texture analysis. 
