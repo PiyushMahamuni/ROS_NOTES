@@ -26,17 +26,17 @@ REPRESENTING POSE IN 3D FRAME -
 		So you have 3 Rotation matrices in multiplied together to achieve the final rotation matrix which then you use in a 4*4 Matrices
 		with translation vector embedded in it to map a point from one frame to another.
 		
-		Rx = |1 0 			0			|	*Note - (To visualise angles pitch, roll and yaw, imagine frame so that +ve side of respective axis
-			 |0	cos(roll)	-sin(roll)	|	* [i.e. +ve x axis for roll, +ve y axis for yaw is shooting out away from you and move the other axes
-			 |0 sin(roll)	cos(roll)	|	* in counter clockwise direction through given value (+ve value - cclk)
+		Rx = |1            0        |	*Note - (To visualise angles pitch, roll and yaw, imagine frame so that +ve side of respective axis
+			 |0 cos(roll) -sin(roll)|	* [i.e. +ve x axis for roll, +ve y axis for yaw is shooting out away from you and move the other axes
+			 |0 sin(roll)  cos(roll)|	* in counter clockwise direction through given value (+ve value - cclk)
 		
-		Ry = |cos(pitch)	0	sin(pitch)	|
-			 |0				1	0			|
-			 |-sin(pitch)	0	cos(pitch)	|
+		Ry = |cos(pitch)  0 sin(pitch)|
+			 |0           1 0		  |
+			 |-sin(pitch) 0 cos(pitch)|
 		
-		Rz = |cos(yaw)	-sin(yaw)	0	|
-			 |sin(yaw)	cos(yaw)	0	|
-			 |0			0			1	|
+		Rz = |cos(yaw) -sin(yaw)	0|
+			 |sin(yaw)  cos(yaw)	0|
+			 |0         0           1|
 		
 		R = Rx * Ry * Rz  [*Note - Since none of the rotation matrix have any shear, their multiplication is associative and order of
 		multiplication doesn't matter for pure rotation matrix]
