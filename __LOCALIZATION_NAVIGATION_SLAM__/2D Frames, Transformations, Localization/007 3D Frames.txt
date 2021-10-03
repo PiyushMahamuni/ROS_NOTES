@@ -1,0 +1,56 @@
+We have seen how to transform cordinates between two 2D Frames.
+However, in Robotics appliation we usually need to use 3D Frames covering both ground and aerial robots.
+
+THE RIGHT HAND RULE -
+	When dealing with 3D cordinate systems, we have 3 axis (x, y, z). The convention is to `Usually` place The z axis relative to x and y according
+	to the right hand rule. stretch thumb, index and middle finger of your right hand orthogonal to each other. Thumb then represents the
+	x, index finger y and middle finger represents the z axis. (the sequence is always x->y->z, Start with flat hand, fingers pointing to x axis,
+	start curling fingers towards y through smallest displacement axis with thumb stretched out orthogonally to motion of fingers, the thumb
+	represents the z axis. (Alternatively) take cross product of [1, 0, 0], [0, 1, 0] and that's the position of [0, 0, 1] )
+
+
+REPRESENTING POSE IN 3D FRAME -
+	
+	Understanding Orientation -
+		Pitch - Angle around Y axis
+		Roll - Angle around X axis
+		Yaw - Angle around Z axis.
+		In 2D space, the Roll and Pitch is always zero and the rotation only ever occurs around Z axis. That is only Yaw angle changes.
+		
+		In some contexts, Pitch, Roll and Yaw may be called Bank, Attitude, Heading respectively.
+	
+	ROTATION MATRICES IN 3D SPACE
+		In 2D space, we only ever had rotation around z axis. But in 3D space, to take a frame from one orientation to another, you perform
+		rotation around x, y, z axis one after the another. (Take the three unit vectors to [1, 0, 0]^T, [0, 1, 0]^T, [0, 0, 1]^T) to their final
+		position after rotation in steps.
+		So you have 3 Rotation matrices in multiplied together to achieve the final rotation matrix which then you use in a 4*4 Matrices
+		with translation vector embedded in it to map a point from one frame to another.
+		
+		Rx = |1 0 			0			|	*Note - (To visualise angles pitch, roll and yaw, imagine frame so that +ve side of respective axis
+			 |0	cos(roll)	-sin(roll)	|	* [i.e. +ve x axis for roll, +ve y axis for yaw is shooting out away from you and move the other axes
+			 |0 sin(roll)	cos(roll)	|	* in counter clockwise direction through given value (+ve value - cclk)
+		
+		Ry = |cos(pitch)	0	sin(pitch)	|
+			 |0				1	0			|
+			 |-sin(pitch)	0	cos(pitch)	|
+		
+		Rz = |cos(yaw)	-sin(yaw)	0	|
+			 |sin(yaw)	cos(yaw)	0	|
+			 |0			0			1	|
+		
+		R = Rx * Ry * Rz  [*Note - Since none of the rotation matrix have any shear, their multiplication is associative and order of
+		multiplication doesn't matter for pure rotation matrix]
+		
+		Then to accomodate the translation vector, we promote the R matrix into 4*4 matrix while embedding the translation matrix as the last
+		column -
+		
+		|x|	= |r11 r12 r13 xt| * |x'|
+		|y|	  |r21 r22 r23 yt|	 |y'|
+		|z|   |r33 r32 r33 xt|	 |z'|
+		|C|   |0   0   0   C |	 |1 |
+		
+		Here x,y,z are cordinates within the frame where the rotation matrices vectors [r11, r21, r32]^T, [r12, r22, r32]^T, [r13, r23, r33]^T
+		are defined, while the x', y' and z' are cordinates from within the frame from which you want to map point onto the first frame.
+		
+		The rotation matrix that takes frame{1} to frame{2} is denoted as {1}R{2} (the unit vectors of frame{2} expressed in frame{1})
+		the letter `t` is used to represent the translation vector
