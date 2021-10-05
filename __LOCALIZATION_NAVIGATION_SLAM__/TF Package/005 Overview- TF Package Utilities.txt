@@ -22,3 +22,7 @@ Note: rqt_tf_tree that allows you dynamic inspection of frames.
 The odom frame is frame relative to the odometry motion of the robot.
 the base_footprint frame is generally the frame attached to base of the robot at its center.
 Other child frames refer to different components and joints of the robot.
+
+Lastly in TF, the frames can be either:
+	Published by a broadcaster node
+	Susbscribed by a ROS node that listen to that frames
