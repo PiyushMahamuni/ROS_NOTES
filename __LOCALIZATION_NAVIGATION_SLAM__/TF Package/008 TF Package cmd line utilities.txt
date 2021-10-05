@@ -1,0 +1,68 @@
+STEP 1: START TURTLEBOT3 GAZEBO SIMULATION
+	roslaunch turtlebot3_gazebo turtlebot3_house.launch
+
+STEP 2: CHECK THE LIST OF ALL TOPICS
+	rostopic list
+	If you observe carefully, you should be able to find a topic named /tf in the list, the presence of this topic means
+	that there are some frames being published.
+
+STEP 3: TO SEE THESE FRMAES
+	to do so, you can use the command -
+	rosrun tf view_frames
+	This command will listen to all frames published for certain time and then prints the pdf file the tree of all the frames
+	that were being published in your ros ecosystem for that period of time. The pdf file will be saved at the same directory where you have
+	ran the command.
+	
+	run
+	evince frames.pdf
+	to see that file
+	
+	In this specific example, you'll that there are only 2 frames.
+	The odom frame represents the frame of the robot with respect to odometry
+	The base_footprint which usually represents the base attached to the robot at it's geometric center.
+
+STEP 4: CHECKING FRAMES
+	We can also check the published frames with -
+	rostopic echo tf
+	
+	Observe that this command shows the existing frames, their parent to child relations and also the transformation between each other.
+	In these tf messages, we can see that there are messages with field frame_id = "odom"
+	and child_frame_id filed equal to "base_footprint" and the transformation between the both which is represented with a translation vector
+	and rotation represented by the quaternion
+
+STEP 5: info of /tf
+	rostopic info /tf
+	<output>
+		Type: tf2_msgs/TFMessage
+		
+		Publisher:
+		 * /gazebo (https:://ubuntu:3871/)
+		
+		Subscriber: None
+	</output>
+
+
+STEP 6: see the contents of the tf2_msgs/TFMessage
+	rosmsg show tf2_msgs/TFMessage
+	<output>
+		geometry_msgs/TransformStamped[] transforms
+		  std_msgs/Header header
+			uint32 seq
+			time stamp
+			string frame_id
+		  string child_frame_id
+		  geometry_msgs/Transform transform
+			geometry_msgs/Vector3 translation
+			  float64 x
+			  float64 y
+			  float64 z
+			geometry_msgs/Quaternion rotation
+			  float64 x
+			  float64 y
+			  float64 z
+			  float64 w
+	</output>
+	
+	Observe the very first field, it's a list of all transformations present in the ros ecosystem each with the type geometry_msgs/TransformStamped
+	Each transformation has a header that contains some metadata and has a transform with translation component and rotation expressed with the
+	help of the quaternion
