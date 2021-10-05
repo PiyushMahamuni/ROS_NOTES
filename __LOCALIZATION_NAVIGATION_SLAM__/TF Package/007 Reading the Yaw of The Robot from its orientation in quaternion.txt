@@ -1,0 +1,27 @@
+Overall steps:
+
+1. Start Turtlebot3 Waffle
+	roslaunch turtlebot3_gazebo turtlebot3_house.launch
+2. Start the navigation stack
+	roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=~/house_map.ymal
+	(Where you have kept the house_map.yaml map file for this particular turtlebot3 environment)
+3. Set the 2D pose estimate in RVIZ (remember the steps we followed while getting acquainted with navigation in ROS)
+   This is done so that navigation stack can accurately identify it's position in the map in which there might be repeating patterns in the
+   surroundings. You set the position estimate for the robot in the environment from that point on, robot can look at it's surrounding and find
+   its best matched position in the map around that estimate, avoiding any ambiguity if there are any similar regions in map.
+2. List all topics
+	There are two topics related to Pose of robot - /odom and /amcl_pose
+3. Check info of /odom topic and amcl_pose in topic
+4. Understand how position and orientation are presented
+5. Write a script that prints the x, y cordinate and yaw angle of the Turtlebot3 robot
+
+Note that the odom topic is encoded as nav_msgs/Odometry Message, it contains information about the Pose (position + orientation) and also
+the velocity of the robot as the Twist message field. Note that the Orientation is encoded as geometry_msgs/Qauternion msg
+
+On the other hand the amcl_pose topic is represented with geometry_msgs/PoseWithCovarianceStamped Message type.
+This message contains only the pose (position + orientation) information (velocities are not encodded in it). The orientation in this message
+is encoded with quaternion as well with geometry_msgs/Quaternion message type.
+
+Now, on the implementation part of a ROS node, which listens to a a topic pusblishing Pose [/odom] and prints out the euler angle info by reading
+quaternion published in the messages, refer github.com/PiyushMahamuni/roslearning/src/TF package/_02Odom_Subscriber.py
+You'll also find the _03Odom_Publisher.py to emulate publishing of Odometry message in the roslearning package.
