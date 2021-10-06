@@ -1,3 +1,6 @@
+STEP 0: install tf2_tools package
+	sudo apt install ros-<version>-tf2-tools
+
 STEP 1: START TURTLEBOT3 GAZEBO SIMULATION
 	roslaunch turtlebot3_gazebo turtlebot3_house.launch
 
@@ -8,7 +11,7 @@ STEP 2: CHECK THE LIST OF ALL TOPICS
 
 STEP 3: TO SEE THESE FRMAES
 	to do so, you can use the command -
-	rosrun tf view_frames
+	rosrun tf2_tools view_frames.py
 	This command will listen to all frames published for certain time and then prints the pdf file the tree of all the frames
 	that were being published in your ros ecosystem for that period of time. The pdf file will be saved at the same directory where you have
 	ran the command.
@@ -18,6 +21,17 @@ STEP 3: TO SEE THESE FRMAES
 	to see that file
 	
 	In this specific example, you'll that there are only 2 frames.
+	To see a richer network of transforms, run this command instead the one in step 1-
+		roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
+	and follow other steps as usual.
+	
+	When we start the turtlebot3_gazebo_rviz.launch file, what happens is that the URDF model of the robot is also loaded, which containts the
+	data about various joints and frames attached to those joints in the robot, and all these frames are published to the ROS ecosystem using a
+	static_transform_publisher which is a ros node which publishes transformations between frames. ( how to convert a point frame one point in
+	another frame.)
+	Here, you can observe (with the rviz launch) that the frame odom is broadcasted by the node - /gazebo at a certain frequency which is a parent
+	frame to the base_footprint frame which is published by the /robot_state_publisher node which is again parent to another node called base_link
+	which is, in fact all other nodes are broadcasted by the /robot_state_publisher node in this example except the odom frame.
 	The odom frame represents the frame of the robot with respect to odometry
 	The base_footprint which usually represents the base attached to the robot at it's geometric center.
 
@@ -63,6 +77,8 @@ STEP 6: see the contents of the tf2_msgs/TFMessage
 			  float64 w
 	</output>
 	
-	Observe the very first field, it's a list of all transformations present in the ros ecosystem each with the type geometry_msgs/TransformStamped
+	Observe the very frst field, it's a list of all transformations present in the ros ecosystem each with the type geometry_msgs/TransformStamped
 	Each transformation has a header that contains some metadata and has a transform with translation component and rotation expressed with the
 	help of the quaternion
+	
+		

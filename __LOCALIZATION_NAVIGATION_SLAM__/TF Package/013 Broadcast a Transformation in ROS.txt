@@ -1,0 +1,4 @@
+It is also possible to broadcast a transformation using a user written ROS node (of course)
+
+
+ **** INCOMPLETE ****

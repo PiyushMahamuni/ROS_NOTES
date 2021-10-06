@@ -1,0 +1,49 @@
+With tf, it very easy to publish transformtion between any two frames. We can do using a ros node.
+
+STEP 0: Start a fresh ros ecosystem
+
+STEP 1: roscore
+STEP 2: rostopic list
+	* You don't have any tf topic as of now
+STEP 3: CREATING TRANSFORMATIONS BETWEEN TWO FRAMES
+	consider two frames- frame_a frame_b and the transformation between the two frames represented by a list of numbers - first 3 numbers,
+	cordinates of the translation vector, second 3 numbers - yaw, roll, pitch angles (I know, weird sequence, could have been roll, pitch yaw)
+														   
+														   Parent Frame    Broadcasting Frequency
+														    |               |
+	rosrun tf static_transfrom_publisher 1 2 3 0.1 0.2 0.3 frame_a frame_b 10 
+	                                                                 |
+	                                                                 child frame
+	
+	This above command will start a static_transform_publisher node which is publishing a transform between frame_a (parent frame) and frame_b
+	(child frame) with translation vecotr = [1, 2, 3]^T and yaw = 0.1 rad, roll = 0.2 rad, pitch = 0.3
+
+STEP 4: rostopic list
+	Now you should see /tf topic in the list indicating now that there are frames existing within the ROSecosystem (may or maynot attached actual
+	joints of real/simulated robots)
+
+STEP 5: rosrun tf2_tools view_frames.py
+	evince frames.pdf
+	observe the diagram. You'll two frames noted with frame_a as the parent frame broadcasted by a /static_transform_publiser_<unique number>
+	and the frame_b as the child frame
+
+STEP 6: rosrun tf2_tools echo.py frame_a frame_b,
+	You should see the same translation vector and rotation information encoded that we provided to the static_transform_publisher with
+	the rosrun command in step 3.
+
+
+* ALTERNATE METHOD
+	It is also possible to publish a transform using a launch file instead of a command line
+	Create a launch file with proper name, say static_transform_publisher.launch in your ros package.
+	
+	Write following content in the .launch file -
+	
+	<launch>
+		<node pkg="tf" type="static_transform_publisher" name="frame_a_to_frame_b" args="1 2 3 0.1 0.2 0.3 frame_a frame_b" />
+	</launch>
+	
+	* This is nothing but the way launch files work in ROS, you could very well launch any node in this manner in ROS providing the package,
+	type (the name by which the executable of the node is recognized) name (the name with which it will be registered in the ROS ecosystem)
+	args (the argument the program expects from the OS, the same parameters that you would provide to the node in command line")
+	
+	run step 4 to step 6 again after launching this newly created launch file with roslaunch command.

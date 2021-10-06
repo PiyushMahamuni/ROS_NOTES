@@ -1,0 +1,23 @@
+There are some other command line utilities that allows you to check the stages of the transformations.
+
+For example the echo.py utility (ros node) allows you to see the transformation between any two frames.
+	rosrun tf2_tools echo.py map odom
+	# the first arg to the node is source frame and the second one is target frame.
+	# that is the transformation that will take a point from the map frame and locate it in the odom frame.
+	Also, the echo.py utility also prints the list of all parent to child transformations.
+	
+	This utility utilizes the information of URDF document along with keeping an eye on the simulation or the real robot (all the frame related
+	telemetry) and with this info, it can calculate transformation between any two frames in the system, inverse transformations of parent-child
+	frames already present in the URDF, frames which are not even directly related (aren't immidiate parents or children of one another)
+	
+	For example, It's possible to find the transformation between frames odom and camera_rgb_frame with the command -
+		rosrun tf2_tools echo.py odom camera_rgb_frame
+	You'll get an output with a translation vector of 3*1 size (3 rows, 1 column) represented as list
+	and rotation is represented with both quaternion and euler angles, in euler angles again in degrees and radians.
+	each transformation with a time stamp (if frames are moving w.r.t each other, the transformations will change over the time)
+	The default rate at which these tranforamtion is printed is 1 second, you can however change this behaviour with an argument which specifies
+	the frequency at which respective frames are analyzed and transformation between the two is printed.
+	e.g.
+		rosrun tf2_tools echo.py odom camera_rgb_frame 2
+		# here 2 is the frequency at which the two frames odom and camera_rgb_frame are analyzed to figure out the transformation from
+		odom frame to the camera_rgb_frame.	

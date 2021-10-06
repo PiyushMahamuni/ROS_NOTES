@@ -1,0 +1,26 @@
+STEP 1:
+	Let us start a navigation module, just to have an another example.
+		roslaunch turtlebot3_navigation turtlebot3_	navigation.launch map_file:=<file path of the .yaml map file>
+
+STEP 2:
+	Generate the frames pdf containing all the frames, their child parent relationships, transformations, broadcaster and avg frequency.
+	rosrun tf2_tools view_frames.py
+	# the pdf is generated in the same directory where you ran the above command.
+	evince frames.pdf
+	
+	This time, the frames.pdf is almost the same as the one generated in 008th note in this dir, except for the presence of one more frame- map
+	which is broadcasted by the /amcl node which is the parent frame of the odom.
+	
+	From where this map frame came? - from navigation stack module that was also launched in this navigation launch file.
+	This map frame is where all the encountered points (surfaces in environment i.e. obstacles) are eventually stored to generate the map
+	of the surrounding for robot to navigate within.
+	Since the map represents the global reference to the localized robot, it is the parent frame of all other frames.
+
+STEP 3:
+	now if you run 
+		rostopic list
+	You should be able to see /amcl_pose topic listed. This topic is publishing the messages related to the map frame.
+	The amcl_pose topic is publishing the robot's position and orientation within the map frame.
+	
+	*** NOTE ***
+		The map frame is required for any map-based navigation mission.

@@ -1,0 +1,8 @@
+It's also possible to monitor the transformation using another utility
+	rosrun tf tf_monitor odom base_footprint
+
+This will show the information about the transformation, such as the publisher node of the frame, The average delay, maximum delay.
+It also shows the statistics of all the broadcasters.
+
+We can also monitor all transformations by not specifying any source or target frames
+	rosrun tf tf_monitor
