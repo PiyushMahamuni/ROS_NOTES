@@ -1,0 +1,62 @@
+We have learnt how to localize a point using frames and transformations between them.
+
+NAVIGATION IN ROS:
+	- Robot navigation means the ability to  move in space without hitting obstacles.
+	  These obstacles can either be static (fixed in space) or dynamic.
+	- Two major categories are -
+		- Map-Based
+			The robot loads and uses a map of the envirnoment which is needed for the navigation. The robot has the global knowledge of all static
+			obstacles and it uses this map to plan its path between any two locations.
+		- Reactive
+			Does not use any map for navigation but only the local information gathered by the sensors of the robot. (In many indoor applications,
+			sensors are often mounted at fixed datum points while the body of the robot is free to move around and the position of the robot
+			is then triangulated afterwards)
+	
+	The task of robo navigation often involves the steps of motion planning, in fact when a robot needs to move from one location to another, it has
+	to plan a path and it's motion along that path to reach the destination Pose (position and orientation)	
+
+
+MAP BASED NAVIGATION -
+	Where is the robot?
+		Localization: it helps to figure out robot's position. Several sensor suits are used to help localize robot and other objects in a given
+		space depending which may differe for different situations. e.g. gps for outdoor systems, cameras, LIDAR, ultrasonic sensors for indoor
+		applications and so on.
+		There are several ways to define location of an object - topological, in alittude, lattitude and longitude, with absolute 3D coordinates
+		and so on.
+	Where is it going?
+		Mapping: The robot needs to have a amap of its environment to be able to recognize where he has been moving so far.
+		How should the robot get there?
+		The map can be set manually to the robot memory, e.g. graph representation, matix representation or can be gradually constructed as the
+		robot explores new environments.
+	Motion / Path Planning:
+		To plan a path, the target position must be well defined, which require an appropriate addressing scheme that the ROS can understand.
+		The addressing scheme allows to specify where the robot will go starting from it's initial location for example a robot may be requested
+		to go to certain room in an office environment with simply giving the room number as an address. In other scenarios, addresses can be given
+		in absoluate or relative coordinates.
+
+SLAM - BUILDING A MAP: SIMULTANEOUS LOCALIZATION AND MAPPING (SLAM)
+	Another important topic in navigation is SLAM.
+	It is the process of the building a map using range sensors (e.g. laser sensors, 3D sensors, Ultrasonic Sensors) while the robot is moving
+	around and exploring an unknown area.
+	The data from the range sensors is then stored in a data structure which represents the created map. for example a 2D array (image file)
+	The cell from such an array is marked either empty of occupied based on the robot's estimated location and then estimated encounter of obstacle
+	in its own frame of reference.
+	
+	Sensor Fusion: This process uses filtering techniques like kalman filter or praticle filters to remove noise off of the range data.
+	This imporves the estimation of the obstacles.
+	
+	* an example of error of measurements is measure of odometry which is known to be imprecise and subject to cumulative error (since odometry
+	referes to use of IMU to figure out relative position of robot w.r.t its initial positoin. Since IMU's use accelometer and gyroscopes both
+	of which have inherent mechanical imperfections (gyroscopes precess becuase of internal friction and earth's rotation also embedded in the
+	data recieved by the gyroscope. Accelometers are inherently noisey since they record all forces (disturbances like wind, vibration, slipping
+	of a wheel and so on)
+	Range sensors also have some inherent errors. 
+	Filtering techniques allow to attenuate the effect of these inherent errors.
+	Large erros will result in skewed and or inaccurate maps
+
+
+NAVIGATION IN ROS:
+	Three main packages of the navigation stack -
+		1. move_base: makes the robot navigate in a map and move to a goal Pose (positoin + orientation) w.r.t. given reference frame.
+		2. gmapping: creates map using laser scan data.
+		3. amcl: responsible for localization using an existing map.
