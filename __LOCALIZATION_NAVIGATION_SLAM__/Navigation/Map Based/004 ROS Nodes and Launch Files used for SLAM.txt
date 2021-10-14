@@ -1,0 +1,76 @@
+Understanding how the slam is implemented and how to configure the parameters related to the slam_gmapping implementation.
+
+command to launch the slam with turtlebot3 -
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_method:=gmapping
+
+Let us look at the contents of this launch file -
+	roscd turtlebot3_slam/launch
+	gedit turtlebot3_slamp.launch
+There will be other launch files each one for particular algorithm.
+
+In this file first, some parameters are set, like the model of the turtlebot3 which is waffle here which is taken from the environment variable.
+Then the slam method and remember we specified it to be the gmapping. Other algorithms are also possible to use (e.g. Cartographer, Hector,
+Frontier_Exploration, RTAB-MAP
+
+Also on line 6, the argument open_rviz is set to true
+
+Contenst of the launch file
+-------------------------------------------------------------------------------------------------------------------
+
+<launch>
+	<!-- Arguments -->
+	<arg name="model" default="$(env TURTLEBOT3_MDOEL)" doc="model type [burger, waffle, waffle_pi]"/>
+	<arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+	<arg name="configuration_basement" default="turtlebot3_lds_2d_lua"/>
+	<arg name="open_rviz" default="true"/>
+	
+	<!-- Turtlebot3 -->
+	<include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+		<arg name="model" value="$(arg model)"/>
+	</include>
+	
+	<!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier Exploration, RTAB-Map -->
+	<include file="$(find turtlebote_slam)/launch/turtlebot3_$(arg slam_methods).launch">
+		<arg name="model" value="$(arg model)"/>
+		<arg name="configuration_basement" value="$(arg configuration_basement)"/>
+	</include>
+	
+	
+	<!-- rviz -->
+	<group if="$(arg open_rviz)">
+		<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find turtlebot3_slam)/rviz/turtlebot3_$(arg slam_method).rviz" />
+	</group>
+</launch>
+-------------------------------------------------------------------------------------------------------------------
+
+
+The turtlebot3_remote.launch file from the turtlebot3_bringup package includes the robot model and also launches the robot's state publisher
+node ( the node responsible for broadcasting frames and transformations of the robot based on the robot model defined with URDF)
+
+Remeber that URDF is an xml document file that describes the frames and transformations of a robot.
+
+Then the slam algorithm is started based on the values of the argument. In our case, it will start the file turtlebot3_gmapping.launch
+which contains all the configuration parameters of the SLAM algorithm. See the contents of that file too.
+roscd turtlebot3_slam/launch/
+gedit turtlebot3_slam.launch - main launch file
+There will be other launch files particular representing a particular algorithm which will be included by the main launch file as per the
+values of arguments passed to it.
+
+In main launch file(content written above), some parameters are set.
+For example the model of the turtlebot3 is taken from the environment variable, then the slam method
+
+The launch file specific to a particular algorithm (i.e. file included by main launch file) first sets some arguments needed for SLAM operation.
+for example -
+<arg name="set_base_frame" default="base_footprint"/> -- setting the name of the base frame of the robot.
+and it also sets the model of the turtlebot3 robot.
+see https://wiki.ros.org/gmapping for full description of the parameters of that .launch file
+
+Finally, the rviz is started with running the rviz node with given args.
+
+
+For various parameters listed in turtlebot3_gmapping.launch and their effect, visit - https://wiki.ros.org/gmapping
+
+IMP paramters-
+	delta: resoulution of the map.
+	mapf offsets -
+	xmin, ymin, xmax, ymax (offset/limiting values of x and y cordinates in the map)

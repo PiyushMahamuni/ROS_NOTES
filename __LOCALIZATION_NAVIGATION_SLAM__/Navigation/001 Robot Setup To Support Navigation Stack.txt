@@ -1,0 +1,101 @@
+The robot needs to properly provide all the required inputs to the ROS ecosystem and its navigation stack for the robot to be able to use them.
+For this, the robot needs to be configured to provide all the necessary inputs and listen to all the necessary outputs from the ROS and navigation
+stack.
+
+The main requirements that robot has to fulfill-	
+	Firstly, the navigation stack assumes that the robot is configured in a particular manner in order to run.
+	See ./002 Robot Setup.png, this image provides an overview of the required configuration.
+	
+	The white components are required components that are already implemented in ROS. These are -
+		1. Global Path Planner
+		2. Local Path Planner
+		3. The recovery Behaviours - represents backup plans for when robots get stuck
+		5. The local and the global costmap which are maps used by the local planner and the global planner respectively.
+	
+	The grey components are optional components that are already implemented -
+		1. map server - ros service reponsible for providing the map to the navigation stack
+		2. amcl - implements monte-carlo localization of the robot and provides the amcl pose.
+		
+	The blue components must be created for each robot platform and these include -	
+		1. The transformation of the each sensor attached to the robot. (i.e. the source of the odometry messages)
+		2. The base controller
+		3. Sensor Sources-
+			a. Laser scanner data
+			b. May include point cloud data as well
+	
+	We need to setup the blue modules from this diagram for a robot to work well with ros navigation stack.
+
+
+Robot Setup Requirements -	
+	ROS -
+		Install ROS on robot
+	Transform Configuration
+		a robot must publish tf transform to describe the relation between coordinate frames.
+		see ./003 Robot Setup.png
+		
+		Observe the robot shown in the `003 Robot Setup.png`. It has a laser scanner attached to its body. The navigation stack requires to know
+		the transformations between the laser scanner (the point on laser scanner with reference to which ranges are found) and the
+		geometric center of the footprint of the robot. (The point where navigation stack assumes the robot is located, (lump mass approximation))
+		
+		base_link is the name of the frame attached to that geometric point of the base foot print of the robot. and base_laser is the
+		name of the frame attached to the point on the laser scanner with reference to which all the ranges are found.
+		The translation vector then from the diagram of the robot can be deduced as - x=0.10m, y=0.00m, z=0.20m, and no relative rotation between
+		the two frames.
+		
+		Now if ever a point was mapped/ranged/obsesrved with this range finder, this transformation allows us to locate the point relative to the
+		geometric center of the foot_print of the robot, i.e. in the base_link frame, which is the relevant infomation robot has to use when
+		it has to make decision regarding navigation.
+	
+	How to publish these required transfomrs?
+		There are two different approaches to do this
+		1. Describe an URDF model of the robot.
+		
+		In ROS every robot can be described as a xml file using the Unified Robot Description Format (URDF file)
+		The URDF file defines all the joints of the robots and its shape using xml. The frames attached to joints are called links within the
+		URDF file. Parent to child relationships is defined between different frames/links. The relative position between joints are defined
+		as transformations specified by a translation vector and rpy euler rotation angles.
+		
+		2. 	BROADCASTING A TRANSFORM
+		
+		We can write a ROS node that publishes a static transform between frames.
+		Refer - https://github.com/PiyushMahamuni/roslearning/blob/master/src/TF/_05Transformation_Broadcaster.cpp
+		and https://github.com/PiyushMahamuni/roslearning/blob/master/src/TF/_04Transformation_Broadcaster.py
+		
+		
+	SENSOR INFORMATION
+		The navigation stack uses information from sensors to avoid obstacles in the world
+		
+		Two types of sensor messages
+			sensor_msgs/LaserScan
+			sensor_msgs/PointCloud
+		Supported Sensors
+			URG, SICK
+	
+	ODOMETRY INFORMATION
+		The navigation stack requires (except for the hector algorithm) that odometry information is published using tf and the nav_msgs/Odometry
+		messages.
+		That is, the Pose (position + orientation) of the robot's base_link frame in the odometry frame.
+		(Where the robot is located in the global map/world using the odometry sensors).
+		The odometry message also carries the information about current velocity.
+	
+	BASE CONTROLLER
+		The navigation stack assumes that it can send velocity commands using geometry_msgs/Twist message type
+		The Twist message is then assumed to represent position and velocity vectors in the base coordinate frame.
+		Special node receives cmd_vel commands and convert them into command signals for the motor drivers.
+		( The node is running off the microcontroller/processor of the robot, which might be or might not be also running the navigation stack )
+	
+	
+	The navigation stack has two modes of operation-
+		With map
+		Without map
+		
+		(Talking about .png file which provides the actual map, not the frame which is an abstract concept implemented in tf package necessary
+		for navigation stack)
+		
+		So, you start the navigation stack with proper arguments, THE URDF file, transform broadcaster, driver node for motors( the one converts
+		the received cmd_vel messages to actuating signals for motor drivers ) [i.e. base controller], odometry information, sensor information.
+		
+		
+		Refer - http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom
+		
+		

@@ -1,0 +1,40 @@
+Here, we will discuss, how to build a map with ROS.
+
+TURTLEBOT3 SLAM DEMO
+
+STEP 1: start turtlebot3 waffle
+	export TURTLEBOT3_MODEL=waffle
+	roslaunch turtlebot3_gazebo turtlebot3_house.launch
+
+STEP 2: open gmapping SLAM application
+	export TURTLEBOT3_MODEL=waffle_pi
+	roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methodss:=gmapping
+	# gmapping method of slam provides laser range finders based SLAM algorithm as a ros node called slam_gmapping
+	# using slam_gmapping you can create a 2 dimensional occcpancy grid map from laser and Pose data collected by the robot.
+	# Then we will make the robot move, to explore it's surroundings better and map them in this 2 dimensional occupancy grid.
+
+STEP 3: Teleop the robot
+	export TURTLEBOT3_MODEL=waffle_pi
+	roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+STEP 4: Save the map
+	rosrun map_server map_server -f ~/map
+	# we can use this map later for map_based navigation.
+
+
+OCCUPANCY GRID MAP -
+	In ROS the map of the environment is the two dimensional matrix which represents the grid structure. The grid is composed of cells which will
+	be marked either free of occupied.
+	Each cell has 3 possible states - 1. Unknown(Gray), 2. Free or empty (white cell - 1 value), 3. Occupied(Black cell - 0 value).
+
+SLAM APPROACHES IN ROS -
+	1. gmapping: contains a ROS wrapper for OpenSlam's gmapping
+	2. cartographer: which is a system developed by Google that provides real time simulataneous localization and mapping in 2D and 3D across
+	multiple platforms and sensor configurations.
+	3. hector_slam: which is another slam approach that can be used without odometry.
+	
+	* NOTE - TURTLEBOT3 waffle model supports gmapping and cartographer slam algorithms.
+	At first, all the cells of the grid matrix are marked unknown and as the robot runs the SLAM algorithm and explores the surroundings, it
+	marks the cell as free or occupied.
+	The quality of the map build is heavily dependent upon the quality of range finder and quality of odometry for the algorithms that use it since
+	these two factors are the source of measurements.

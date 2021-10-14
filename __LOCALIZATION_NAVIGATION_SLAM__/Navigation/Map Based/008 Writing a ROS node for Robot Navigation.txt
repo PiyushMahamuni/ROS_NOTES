@@ -1,0 +1,42 @@
+ROS NODE FOR ROBOT NAVIGATION.
+( Python version )
+
+refer - https://github.com/PiyushMahamuni/roslearning/blob/master/src/Navigation/Map_Based/_01Set_Nav_Goal.py
+
+NOTE -
+
+	To figure out the cordinates of the goal location, open a terminal and run - `rostopic echo initialpose`
+	Use the 2D pose estimate tool/button from RVIZ to select the target location, once you do that the initialpose topic will receive the
+	cordinates of this target location as an update and you'll see those in the terminal. Now you can use this location as a goal values
+	in your program.
+
+
+UNDERSTANDING ACTION LIB -
+actionlib uses asynchronous communication mode. i.e. the client is free to do other things while its request is being processed by the server.
+http://wiki.ros.org/actionlib
+
+
+UNDERSTANDING THE MoveBaseAction MESSAGE TYPE
+	This message type is used to exchange messages between move_base actionlib server which has global and local path planners implemented in it
+	which is responsible to making the robot move to the goal location.
+	
+	Contents ------------------------------------------------
+	
+	MoveBaseActionGoal action_goal			# defines the pose of the goal location
+	MoveBaseActionResult action_result		# used to carry the final result of the request	
+	MoveBaseActionFeedback action_feedback	# carries the intermediate results of the request
+	
+	---------------------------------------------------------
+	
+	The geometry_msgs/Point message -
+	
+	Contents ------------------------------------------------
+	
+	# this contains a position of point in free space.
+	float64 x
+	float64 y
+	float64 z
+	
+	---------------------------------------------------------
+	
+	

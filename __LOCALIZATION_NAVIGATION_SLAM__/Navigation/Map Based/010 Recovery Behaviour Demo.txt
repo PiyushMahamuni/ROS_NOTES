@@ -1,0 +1,29 @@
+STEP 1:
+	roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<.yaml file path>
+
+STEP 2:
+	roslaunch turtlebot3_gazebo turtlebot3_house.launch
+
+STEP 3:
+	Send a valid goal location to the navigation stack using `Set Nav Goal` button in RVIZ
+	# The robot should perform a successful navigation mission - normal execution.
+
+STEP 4:
+	Send an invalid goal location to the navigatin stack using `Set Nav Goal` button in RVIZ
+	In such a situation, the global path planner won't be able to figure out a valid path to the goal location.
+	Here, it might seem bit absurd but the navigation stack doesn't abandon the navigation mission, instead it puts the local path planner
+	in control of the robot right away, but the local path planner doesn't have static path to follow...
+	(This is the recovery mode, even though there was never a static path to recover from)
+	
+STEP 5:
+	Observe the terminals carefully for log messages.
+	The moment you send an invalid goal to the navigation stack, warnings will be printed on the screen.
+	"Clearing costmap to unstuck robot (radius)" ----> CONSERVATIVE RESET
+	"Rotate Recovery Behaviour Started" ----> CLEARNING ROTATION
+	"Clearning costmap to unstuck robot (radius)" ----> AGGRESSIVE RESET
+	"Aborting because a valid plan could not be found. Even after executing all recovery behaviours" ----> ABORTING
+	
+
+NOTE :
+	 There might be other instances where the the global path planner can find a valid static path but the goal location is too close to the
+	 obstacles that the robot has to shift to recovery mode. If it fails, it will abort the mission.

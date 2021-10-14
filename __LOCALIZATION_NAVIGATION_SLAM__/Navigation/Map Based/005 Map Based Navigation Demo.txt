@@ -1,0 +1,55 @@
+Objective:
+	Use the map of the interest and tell the robot to go to certain location on that map.
+
+We have already seen hot to build a map with the gmapping algorithm.
+Here, we will see how to use such maps program navigation missions for the robot.
+Remember the map in the ROS consists of two files.
+	.yaml file - contains metadata of the map.
+	.pgm - grayscale image of the map.
+
+
+STEPS -
+	roslaunch turtlebot3_gazebo turtlebot3_house.launch
+		# opens the turtlebot3 simulator
+	# now for navigation, we need to load the navigation stack of the robot with map of the environment as its input.
+	roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path of the .yaml file>
+	
+	Wher RVIZ pops up, you'll see that the robot is initially placed at the center of the map (at origin)
+	However, this initial location on the map is not in accordance with the real (simulated) location of the robot in the environment.
+	This is because initially, the navigation stack of the robot does not know the location of the robot, once the navigation stack is started
+	and it can observe the data gathered by the sensor suit of the robot, it can try to place itself to best possible match in the map given to it.
+	Thus we need to explicitly tell the robot it's initial position estimate in the map so that after the navigation stack is started, it can
+	pinpoint its location in the map. This step is needed because there might be regionally (locally) same or similar places in the map and
+	the robot will face ambiguity about it's location in the map if we don't provide it with an initial estimate of its location.
+	
+	Understanding RVIZ-
+	Look at the colored square around the robot, this corresponds to navigation areas provided by the local path planner. In ROS we need to plan
+	the motion of the robot which is done through the motion planner algorithms. The local planner is the planner which is responsible for
+	executing the execution of the robot. We can observe two main colors in the navigation region Seen by the local planner. Blue color corresponds
+	to free space where the robot can navigate.
+	Red colored regions corresponds to obstacle space that robot has to avoid.
+	
+	Note that there is inflation around every obstacle to make sure that robot won't hit it. It is kind of a preventive measure to avoid hitting
+	obstacles. In order to send the goal location to the robot we use the button 2D nav goal. This button sends the cordinate x, y, theta in the
+	map frame of the selected point as a goal pose to the navigation stack of the robot.
+	
+	Observe that there is path drawn between the current location of the robot and the selected goal location. It is the route planned by the
+	global path planner. The role of the global path planner is to find an obstacle free path between two points in the map.
+	Once the path is planned, the robot starts to move across the path.
+	The execution of the path is the responsibilitiy of the local path planner. Its objective is to follow the obstacle free path planned by the
+	global path planner which used the static map to figute it out. Now, while trying to follow the obstacle free path, the local path planner
+	can see the data gathered by the sensors and now responds to dynamic changes in the environment avoiding unseen obstacles/ dynamic obstacles
+	and figuring out.
+	
+	When the robot reaches the destination, it will rotate to satisfy the final orientation in the goal pose. (Remember that the goal pose includes
+	both position and orientation).
+	
+	This is the summary of the navigation works in ROS with navigation stack.
+
+
+Key Points:
+	1. We first need to manually set the initial location of the robot in the map using 2D Pose Estimate.
+	2. We send goal poses (location + orientation) using 2D Nav Goal, so that the robot moves to it.
+	3. The navigation stack has two motion planners:
+		The global path planner: plans a static obstacle free path from the location of the robot to the goal location.
+		Local path planner: executes the planned path and avoids dynamic obstacles.

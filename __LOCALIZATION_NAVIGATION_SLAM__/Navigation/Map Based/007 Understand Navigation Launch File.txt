@@ -1,0 +1,40 @@
+Understanding the launch file that is responsible for starting the navigation stack for turtlebot3.
+
+STEP 1: Access the .launch file
+	roscd turtlebot3_navigation/launch
+	gedit turtlebot3_navigation.launch
+	
+	
+	This file first loads the turtlebot3_remote.launch file from the turtlebot3_bringup package.
+	This launch file includes the robot model and also launches the robot's state publisher node.
+	The robot state publisher node is a node responsible for broadcasting the frames and transformations of the robot based on the robot model
+	defined with the URDF file.
+	
+	Then the map server node from the map_server package is started and takes the yaml map file as argument.
+	We have provided the path of this yaml file as an argument in the command line (map_file:=<.yaml file path>)
+	If this map file is not specified then the navigation stack will take the default map file located in the path -
+	$(find turtlebot3_navigation)/maps/map.yaml
+	The map server node provides the map of the environment as a ROS service that will be used by the navigation stack. (The map in the ROS are
+	stored in two files- .yaml contains the metadata of the map, .pgm contains the grayscale image of the map).
+	(colored images are accepted but those images are averaged to a grayscale image)
+	
+	Now the AMCL launch file is started AMCL is a probabilistic localization system for a robot moving in a 2 dimensional space. It implements the
+	adaptive monte carlo appraoch which uses a particle filter to track the pose of the robot against a known map.
+	(The node that estimates robot's pose in the map)
+	
+	Observe the RVIZ, you'll see a cloud of green dots, these are the probabilistic locations where navigation stack thinks robot is.
+	The smaller this cloud of green dot, the more accurate the robot has been localized.
+	This locations is being updated using both, the odometry data and the range finders' data against the information from the map.
+	The amcl launch file contains the configurations of the monte carlo localization.
+	
+	The fourth node is probably the most important node and it represents the navigation stack. it is the move_base node.
+	This node implements both global path planner that adhere to nav core base global planner interface specified in the nav core package.
+	And local planner that adhere to base local planner interface specified in the nav core package.
+	It is responsible for finding static path between robot location and goal location via the global path planner and also to execute and follow
+	the path using the local path planner. The move base node links together the local and global path planners to accomplish its navigation task.
+	
+	Finally RVIZ visualization tool is started to be able to see the navigation of the robot. With RVIZ you first have to provide initial pose
+	estimate and then you can send the navigation stack goal Pose.
+	
+	*Note- to setup the navigation for any other robot, it must also start similar processes, namely the AMCL node, the move base node,and the map
+	 server node which are necessary for any navigation mission. For any particular robot there are steps to follow to setup its navigation stack.
