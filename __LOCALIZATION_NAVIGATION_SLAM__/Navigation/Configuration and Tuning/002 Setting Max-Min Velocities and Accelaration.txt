@@ -1,0 +1,62 @@
+The local path planner of the ROS navigation stack produces the velocity commands of type geomtery_msgs/Twist to control the robot motion.
+For the optimal performace of the navigation it is important to set the minimun and the maximum velocities and accelarations relative to each
+robot. In fact, these bounds for accelaration and velocities are tightly copouled with motors used by every robot and we need to provide the
+navigation stack the estimation maximum and minimum translation and rotational velocities and accelaration for every robot.
+
+WHERE TO UPDATE VELOCITY AND ACCELARATION INFO
+	The parameters of the velocity and accelration are provided in the yaml configuration file of the local planner.
+	
+	For turtlebot3, the parameter configuration files are located at -
+	/opt/ros/<version>/share/turtlebot3_navigation/param/
+	
+	[Use- roscd turtlebot3_navigation/param/ ]
+	
+	Open any file related to local planner and identify the velocity and accelaration parameters for Turtlebot3 robot.
+	The question is how to estimate/determine these values?
+	
+
+	Run `roscd turtlebot3_navigation/param/`
+
+	list all files with `ls`. You'll see bunch of .yaml files. Open any one related to the local planner.
+
+	e.g. gedit dwa_local_planner_params_waffle.yaml
+
+	You'll see the velocity and accelaration parameters mentioned right at the top of the file.
+
+
+HOW TO OBTAIN THE MAXIMUM VELOCITY
+	
+	Run the robot with successively increasing velocity and note down the highest translational velocity upto which the robot is stable/not 
+	slipping
+	can stop safely.
+	
+	You can do this by not running navigation stack, just publishing the odometry information while controlling the robot via manually
+	via a rc remote or a joystick.
+	
+	For rotational velocity, adapt similar approach. Start rotating the robot manually and keep increasing the velocity until the robot starts
+	to lose its stability. Monitor the odom topic meanwhile and choose the upmost safe rotational velocity where robot didn't lose it's stability
+	and was able to stop safely.
+	
+HOW TO OBTAIN THE MAXIMUM ACCELARATION
+	Try to get it from motors manual(if available)
+	*** The maximum accelaration from motors might be bit too much for the robot where you want to underspecify accelaration values in .yaml
+	files to make sure robot operates safely.
+	
+	Write a node that publishes accelaration, and do similar practical tests as explained earlier for velocities to determine the appropriate
+	values of accelratations.
+
+HOW TO SET MINIMUM VALUES
+	Set the minimum translational velocity to a reasonable negative value. This will allow the robot to move backwards whenever it gets stuck.
+	
+	Set the minimum rotational velocity to a reasonable neagative value. This will allow the robot to rotate in both directions.
+	
+	These parameters are used by local planner when robot gets stuck.
+
+
+VELOCITIS IN X AND Y DIRECTION
+	These are the velocites in the robot's frame of reference, not the global map's frame.
+	Usually the robots are non holonomic - like cars (differential drive robots). i.e. they can't move in y direction and hence for these types of
+	robots, the velocity in x direction is same as the translational velocity and velocity in y direction is 0.
+	
+The corresponding parameter names for behaviours discussed above are -
+max_vel_x, min_vel_x, max_vel_y, min_vel_y, max_trans_vel, min_trans_vel, max_rot_vel, min_rot_vel, acc_lim_x, acc_lim_y, acc_lim_theta

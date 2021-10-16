@@ -1,0 +1,35 @@
+DYNAMIC WINDOW APPROACH PLANNER
+	It is implemented as a ROS package - dwa_local_planne. This package implements the interface nav_core::BaseLocalPlanner and produces velocity
+	commands to send to a mobile base provided that it has as input, a path to follow and the costmap
+	
+DWA ALGORITHM
+	Discretely sample in the robot's control space(dx, dy, dtheta)
+	i.e. generates randoms samples for linear and angular velocities.
+	
+	For each stamped velocity, perform forward simulation from the robot's current state to predict what would happen if the stamped velocity
+	were applied for some (short) period of time
+	
+	Evaluate (score) each trajectory resulting from the forward simulation, using a metric that incorporates characterestics such as: proximity
+	to obstacles, proximity to goal, proximity to global path and speed. Discard illegal trajectories (those that collide with obstacles)
+	
+	Pick the hightest-scoring trajectory and send the associated velocity to the mobile base.
+	(All the trajectories simulated for short period of time are pair of translational and rotational velocities - i.e. arc of an circle)
+	
+	Rinse and repeat until the robot reaches the destination or gets stuck.
+
+NOTES-	
+	The DWA planner depends upon the local costmap which provides obstacle information
+	It is important to well tune the parameters of local planner for a good performance.
+	
+	There are two types of costmap - global and local. you'll find these maps (i.e. the .yaml file which also contains location of corresponding
+	.pgm file)
+	
+	roscd turtlebot3_navigation/param/
+	ls
+	
+	# you'll see global_costmap_params.yaml and local_costmap_params.yaml files in here for turtlebot3 robot's simulation.
+	
+	The global_costmap_params.yaml only considers static obstacles of the map.
+	The second costmap - local_costmap_params.yaml is used by the local path planner and this contains additional information obtained from the
+	sensor suit of the robot about the obstacles in the environment.
+	So the local path planner considers both the static obstacles and the dynamic obstacles that may appear in the local costmap.

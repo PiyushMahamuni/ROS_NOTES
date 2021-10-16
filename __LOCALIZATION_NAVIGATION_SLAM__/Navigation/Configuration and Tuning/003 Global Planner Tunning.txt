@@ -1,0 +1,51 @@
+We will discuss some of the most importants global path planner parameters and how to tune them.
+
+Let's first discuss about the built-in global path planners in ROS.
+	The global path planner is responsible for finding a global obstacle free path from initial location to the goal loaction using the
+	environment map
+	
+	Global path planner must adhere to nav_core::BaseGlobalPlanner interface.
+	This interface defines the general functionalities of any global path planner.
+	
+	THe BaseGlobalPlanner interface has the following structure -
+	
+	use #include <base_global_planner.h> to include the nav_core::BaseGlobalPlanner class and its interface
+	
+	# Public methods -
+	
+	virtual void initialize(std::string name, costmap_2d::Costmap2DROS* costmap_ros)=0
+	- Initialization function for the BaseGlobalPlanner
+	
+	virtual bool makePlan(const geometry_msgs::PoseStamped& start, const geometry_msgs::PoseStamped& goal, std::vector<geometry_msgs::PoseStamped>& pian)=0
+	- Given a goal pose in the world, compute a plan.
+	
+	virtual bool makePlan(const geometry_msgs::PoseStamped& start, const geometry_msgs::PoseStamped& goal, std::vector<geometry_msgs::PoseStamped>&pian, double& cost)
+	- Given a goal pose in the world, compute a plan.
+	
+	virtual ~BaseGlobalPlanner()
+	- virtual destructor for the interface.
+	
+	If you want to implement your own path planner -http://wiki.ros.org/navigation/Tutorials/Writing%20A%20Global%20Path%20Planner%20As%20Plugin%20in%20ROS
+	
+
+THREE BUILT-IN GLOBAL PATH PLANNERS -
+	carrot_planner:
+	Simple global planner that takes a user specified goal point and attempts to move the robot as close to it as possible, even when the goal
+	point is an obstacle.
+	
+	navfn: (navigation function)
+	Uses the Dijkstra's algorithm to find the global path between any two locations.
+	
+	global_planner:
+	is a replacement of navfn and is more flexible with more options.
+	Support of A*
+	can use grid path
+	
+PARAMETERS OF THE GLOBAL PATH PLANNER.
+	refer - http://wiki.ros.org/global_planner
+	
+	It is possible to enable or disable the dijkstra algorithm by settin the parameter use_dijkstra to true or false.
+	
+	The parameter use_quadratic if set to true, the global planner uses the quadratic approximation of the potential, otherwise it uses simpler
+	calculations
+	

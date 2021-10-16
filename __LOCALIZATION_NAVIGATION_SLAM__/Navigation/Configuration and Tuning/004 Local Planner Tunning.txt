@@ -1,0 +1,33 @@
+BUILT-IN LOCAL PATH PLANNERS IN ROS-
+	The local path planner is responsible for executing the static path determined by the global path planner while avoiding dynamic obstacles that
+	might come into the path using the robot's sensors
+	
+	Global path planner must adhere to nav_core::BaseLocalPlanner interface.
+	This interface defines the general functionalities of any local planner.
+	
+	you'll have to include - #include<base_local_planner.h> to use this interface
+	
+	Public Methods
+	
+	virtual bool computeVelocityCommands(geometry_msgs::Twist& cmd_vel)=0
+	Given the current position, orientation and velocity of the robot, compute velocity commands to send to the base driver
+	
+	virtual void initialize(std::string name, tf::TransformListener* tf, costmap_2d::Costmap2DROS* costmap_ros)=0
+	Constructs the local planner
+	
+	virtual bool isGoalReached()=0
+	Checks if the goal pose has been reached. There are some tolerances defined in regard to this check.
+	
+	virtual bool setPlan(const std::vector<geometry_msgs::PoseStamped>& plan)=0
+	Set the plan that local planner is following
+	
+	virtual ~BaseLocalPlanner()
+	virtual destructor for the interface.
+	
+	Protected Member functions-
+	
+	BaseLocalPlanner() [i.e. the constructor... what??!!! must be a constructor inherited of a parent class]
+	
+
+# THERE ARE SEVERAL LOCAL PATH PLANNERS IMPLEMENTED IN ROS. WE'LL DISCUSS THE DYNAMIC WINDOW APPROACH LOCAL PATH PLANNER FIRST, WHICH IS THE
+# MOST WIDELY USED ONE.

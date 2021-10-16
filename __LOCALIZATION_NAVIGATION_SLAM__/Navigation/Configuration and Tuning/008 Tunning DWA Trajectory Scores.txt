@@ -1,0 +1,38 @@
+TUNNING OF TRAJECTORY SCORING PARAMETERS:
+	 Is a crucial step for a smooth and high performance navigation. In fact, the trajectories that will be actually followed by the robot heavily
+	 depends on the configuration of the parameters and these may impact a lot how the robot moves in an open space and also around obtacles and
+	 narrow passages.
+	 
+STEP 1:
+	roscd turtlebot3_navigation/param/
+	gedit dwa_local_planner_params_waffle.yaml
+	
+	We'll be tinkering around with p_dist, g_dist and occdist_scale parameters. Their default values are 32.0, 20.0 and 0.02 respectively.
+	
+	You can modify these parameters in place with any text editor or via parameter server. e.g.-
+	
+	rosrun rqt_reconfigure rqt_reconfigure
+	# this rqt_reconfigure utility allows you to access all the parameters in ROS from the parameter server and even allows you to change them
+	dynamically without having to change the configuration files. This is a practical approach since it is quite cumbersome to modify the
+	configuration files repeatedly and launch respective nodes again and again.
+	
+	Find the p_dist, g_dist and occdist_scale parameters in the parameter server. You'll observe that the initial or default values of these
+	parameters are the ones mentioned in the configuration files.
+	
+	First experiment, set the goal_distance_bias to zero and run the turtlebot3 navigation simulation. Send a navigation goal to turtlebot3
+	The robot tries to follow the static path exactly as it is. Before it made a trade off between following a path that coincides with
+	static path and following a path which is closer to the local goal.
+	
+	Second experiment, rest the goal_distance_bias to 32 and set path_distance_bias to 0, send a navigation goal to the robot and observe.
+	Here, trajectories that converge faster to the goal location are favored over the trajectories that stay close to the static path generated
+	by the global path planner.
+	
+	Third experiment, reset p_dist and g_dist parameters to their default values.
+	Send a goal location for which robot has to move through a narrow passage.
+	Right now, the occdist_scale factor must be 0.02 and robot will not have much problems traversing through narrow passages.
+	Now reset the occdist_scale parameter to a very high value (say 12) and send another goal location for which the robot will have to move
+	through a narrow passage. Now the robot will either be stuck, will just perform a circular motion and won't be able to make any sensible
+	progress towards acheiving the goal loation.
+	
+	Fourht experiment, Now reset the occdist_scale factor to 0, which is another extreme case. Here, the robot won't care if it runs into an
+	obstacle, only the global path planner will generate static paths which avoid them from robot's current Pose to goal Pose.	
