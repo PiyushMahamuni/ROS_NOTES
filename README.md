@@ -1,2 +1,2 @@
 # ROS_NOTES
-Notes about ROS
+Notes about ROS (noetic)
