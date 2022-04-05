@@ -4,7 +4,7 @@ If you remember, all of your ros packages now must be contained within their own
 
 To create these directories and start writing source code of your package, you first move to the <catkin workspace dir>/src directory and run this command -
 
-	"create_catkin_pkg <package_name> [optional - dependencies]"
+	"catkin_create_pkg <package_name> [optional - dependencies]"
 
 After running this command a directory with the same name as that of the package name will be created within the current directory, containing a package.xml manifest file which contains all the metadata related to package (maintainer, license, dependencies) and a CMakeList.txt file for the catkin.
 
@@ -13,5 +13,3 @@ You'll find the dependencies that you passed as an argument to the create_catkin
 To view the package.xml file, you can just use the cat package.xml in the right directory.
 
 After that you can create your own nodes within the package and move to the catkin workspace directory and run the catkin_make command to build your packages and nodes after which you'll be able to run them.
-
-
